@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule} from '@angular/material/select';
@@ -22,7 +23,13 @@ import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.com
 import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
 import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.component';
 
-
+const routes: Routes = [
+  { path: 'cadastroPeso', component: CadastroPesoComponent },
+  { path: 'edicaoPeso', component: EdicaoPesoComponent },
+  { path: 'formCadastro', component: FormCadastroComponent },
+  { path: 'graficoPeso', component: GraficoPesoComponent },
+  { path: 'listaSuinos', component: ListaSuinosComponent }
+];
 
 @NgModule({
   declarations: [
@@ -36,6 +43,7 @@ import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,

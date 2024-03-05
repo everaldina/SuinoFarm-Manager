@@ -1,5 +1,31 @@
-<app-form-cadastro></app-form-cadastro>
-<app-lista-suinos></app-lista-suinos>
-<app-grafico-peso></app-grafico-peso>
-<app-cadastro-peso></app-cadastro-peso>
-<app-edicao-peso></app-edicao-peso>
+<div id="main-header">
+
+    <button mat-raised-button color="primary" (click)="paraFormCadastro()">
+        Cadastro de suíno
+    </button>
+
+    <button mat-raised-button color="primary" (click)="paraListaSuinos()">
+        Listagem de suínos
+    </button>
+
+    <button mat-raised-button color="primary" (click)="paraGraficoPeso()">
+        Controle de peso
+    </button>
+
+    <button mat-raised-button color="primary" (click)="paraCadastroPeso()">
+        Cadastro de peso
+    </button>
+
+    <button mat-raised-button color="primary" (click)="paraEdicaoPeso()">
+        Edição de peso
+    </button>
+
+    <button mat-raised-button color="primary" (click)="fechar()">
+        Fechar
+    </button>
+
+</div>
+
+<br><br> 
+
+<router-outlet></router-outlet>
