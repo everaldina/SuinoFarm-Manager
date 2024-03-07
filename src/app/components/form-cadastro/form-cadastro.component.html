@@ -1,1 +1,46 @@
-<p>form-cadastro works!</p>
+<form [formGroup]="formularioSuino" (ngSubmit)="onSubmit()" class="suino-form">
+    
+    <mat-form-field>
+        <mat-label>Brinco do Animal</mat-label>
+        <input matInput formControlName="brincoAnimal">
+    </mat-form-field>  
+
+    <mat-form-field>
+        <mat-label>Brinco do Pai</mat-label>
+        <input matInput formControlName="brincoPai">
+    </mat-form-field> 
+
+    <mat-form-field>
+        <mat-label>Brinco da Mãe</mat-label>
+        <input matInput formControlName="brincoMae">
+    </mat-form-field> 
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker1" formControlName="dataNascimento" placeholder="Escolha uma data">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field> 
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker2" formControlName="dataSaida" placeholder="Escolha uma data">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field> 
+
+    <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select matInput formControlName="status">
+            <mat-option *ngFor="let item of listaStatus" value="{{item}}">{{item}}</mat-option>
+        </mat-select>
+    </mat-form-field> 
+
+    <mat-form-field>
+        <mat-label>Sexo</mat-label>
+        <mat-select matInput formControlName="sexo">
+            <mat-option *ngFor="let item of listaSexos" value="{{item}}">{{item}}</mat-option>
+        </mat-select>
+    </mat-form-field> 
+
+    <button mat-raised-button type="submit" class="botao">Submit</button>
+
+</form>
