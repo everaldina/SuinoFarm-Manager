@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { DatabaseService } from '../../services/database.service';
 @Component({
   selector: 'app-form-cadastro',
   templateUrl: './form-cadastro.component.html',
@@ -12,7 +12,7 @@ export class FormCadastroComponent {
   listaStatus: string[] = ['Ativo', 'Vendido', 'Morto'];
   listaSexos: string[] = ['M', 'F'];
 
-  constructor(){
+  constructor(private database: DatabaseService){
     this.formularioSuino = new FormGroup({
       'brincoAnimal': new FormControl(null, [
           Validators.required,
@@ -48,8 +48,12 @@ export class FormCadastroComponent {
   }
 
   onSubmit(){
-    if(this.formularioSuino.valid)
+    if(this.formularioSuino.valid){
       console.log("Formulário válido", this.formularioSuino.value);
+      this.database.addSuino(this.formularioSuino.value);
+      this.formularioSuino.reset();
+
+    }
     else
       console.log("Formulário inválido")
   }

@@ -1,4 +1,5 @@
 export interface Suino {
+    id: string;
     brinco: string;
     brinco_pai: string;
     brinco_mae: string;
