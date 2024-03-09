@@ -1,10 +1,10 @@
 export interface Suino {
     id: string;
-    brinco: string;
-    brinco_pai: string;
-    brinco_mae: string;
-    data_nascimento: Date;
-    data_saida: Date;
+    brincoAnimal: string;
+    brincoPai: string;
+    brincoMae: string;
+    dataNascimento: string;
+    dataSaida: string;
     status: 'Ativo' | 'Vendido' | 'Morto';
     sexo: 'M' | 'F';
 }

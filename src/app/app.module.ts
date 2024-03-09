@@ -23,6 +23,8 @@ import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.com
 import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
 import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.component';
 
+import { DatePipe } from '@angular/common';
+
 const routes: Routes = [
   { path: 'cadastroPeso', component: CadastroPesoComponent },
   { path: 'edicaoPeso', component: EdicaoPesoComponent },
@@ -56,7 +58,8 @@ const routes: Routes = [
     MatButtonModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
