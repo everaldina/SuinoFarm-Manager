@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DatabaseService } from '../../services/database.service';
 import { Suino } from '../../models/suino';
 import { MedidaPeso } from '../../models/medida-peso';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro-peso',
@@ -14,7 +15,7 @@ export class CadastroPesoComponent {
   suinos: Suino[] = [];
   cadastroPeso = new FormControl('', Validators.required);
 
-  constructor(private formBuilder: FormBuilder, private databaseService: DatabaseService) {
+  constructor(private formBuilder: FormBuilder, private databaseService: DatabaseService, private datePipe: DatePipe) {
     this.formCadastro = this.formBuilder.group({
       brinco: ['', Validators.required],
       data: ['', Validators.required],
@@ -37,7 +38,7 @@ export class CadastroPesoComponent {
       
       let peso: MedidaPeso = {
         id : '',
-        data_medida: this.formCadastro.value.data,
+        data_medida: this.datePipe.transform(this.formCadastro.value.data, 'yyyy-MM-dd') ?? '',
         peso: this.formCadastro.value.peso
       };
 
@@ -50,6 +51,25 @@ export class CadastroPesoComponent {
         this.formCadastro.reset();
       }
     }
+    //else{
+    //  // teste de pesos
+    //  // pegar todos os pesos de um suíno
+    //  let pesos: MedidaPeso[] = [];
+    //  this.databaseService.getPesos("-NsYguoo6JOR_DLaOP7t").subscribe((response) => {
+    //    for (const key in response) {
+    //      if (response.hasOwnProperty(key)) {
+    //        pesos.push({ ...response[key], id: key });
+    //      }
+    //    }
+    //    console.log("Pesos do suino -NsYguoo6JOR_DLaOP7t");
+    //    console.log(pesos);
+    //  });
+    //  // pegar peso especifico de um suino
+    //  this.databaseService.getPeso("-NsYguoo6JOR_DLaOP7t", "-Nsdq2jg4FmfvvrRDCIS").subscribe((response) => {
+    //    console.log("Peso especifico do suino -NsYguoo6JOR_DLaOP7t");
+    //    console.log(response);
+    //  });
+    //}
   }
 }
 

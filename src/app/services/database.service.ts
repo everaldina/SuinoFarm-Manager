@@ -1,3 +1,4 @@
+import { MedidaPeso } from './../models/medida-peso';
 import { Suino } from '../models/suino';
 import { Injectable } from '@angular/core';
 import {
@@ -8,7 +9,6 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { MedidaPeso } from '../models/medida-peso';
 
 @Injectable({
   providedIn: 'root',
@@ -105,7 +105,7 @@ export class DatabaseService {
 
   addPeso(id: string, peso: MedidaPeso) {
     this.http
-      .post(this.endpoint + `/suinos/${id}/${id}.json`, peso)
+      .post(this.endpoint + `/suinos/pesos/${id}.json`, peso)
       .subscribe((response) => {
         console.log(response);
       });
@@ -113,7 +113,7 @@ export class DatabaseService {
 
   getPesos(id: string): Observable<MedidaPeso[]> {
     return this.http
-      .get<MedidaPeso[]>(this.endpoint + `/suinos/${id}/${id}.json`)
+      .get<MedidaPeso[]>(this.endpoint + `/suinos/pesos/${id}.json`)
       .pipe(retry(2), catchError(this.handleError))
       //.subscribe((response) => {
       //  for (const key in response) {
@@ -124,10 +124,16 @@ export class DatabaseService {
       ;
   }
 
-  updatePese(id: string, peso: MedidaPeso) {
+  getPeso(id_porco: string, id_medida: string): Observable<MedidaPeso>{
+    return this.http
+      .get<MedidaPeso>(this.endpoint + `/suinos/pesos/${id_porco}/${id_medida}.json`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  updatePese(id_porco: string, peso: MedidaPeso) {
     return this.http
       .put<MedidaPeso>(
-        this.endpoint + `/suinos/${id}/${id}.json`,
+        this.endpoint + `/suinos/pesos/${id_porco}/${peso.id}.json`,
         peso,
         this.httpOptions
       )

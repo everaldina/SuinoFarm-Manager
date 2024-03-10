@@ -1,5 +1,5 @@
 export interface MedidaPeso {
     id: string;
-    data_medida: Date;
+    data_medida: string;
     peso: number;
 }
