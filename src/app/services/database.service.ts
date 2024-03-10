@@ -130,7 +130,7 @@ export class DatabaseService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  updatePese(id_porco: string, peso: MedidaPeso) {
+  updatePeso(id_porco: string, peso: MedidaPeso) {
     return this.http
       .put<MedidaPeso>(
         this.endpoint + `/suinos/pesos/${id_porco}/${peso.id}.json`,
