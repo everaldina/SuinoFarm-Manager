@@ -1,12 +1,15 @@
 <div class="row">
-    <div class="col-xs-12 col-md-6 col-md-offset-3" id="main">
-        <div class="alert alert-danger" *ngIf="temErro">
-            {{erro}}
+    <div class="alert alert-danger" *ngIf="temErro">
+        <div class="close" (click)="fecharAlerta()">
+            <span aria-hidden="true">&times;</span>
         </div>
+        {{erro}}
+    </div>
+    <div class="col-xs-12 col-md-6 col-md-offset-3" id="main">
         <br>
-        <!-- <div *ngIf="estaCarregando">
+        <div *ngIf="estaCarregando">
             <app-loading-spinner></app-loading-spinner>
-        </div> -->
+        </div>
         <form #autenticaForm="ngForm" (ngSubmit)="onSubmit(autenticaForm)" *ngIf="!estaCarregando" id="login">
             <div class="form-group">
                 <label for="email">E-mail</label>

@@ -60,6 +60,32 @@ button{
     border: 1px solid #5a6268;
 }
 
+.alert {
+  position: relative;
+  padding: 15px 40px 15px 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+  
+  .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    color: inherit;
+    cursor: pointer;
+    height: 5px;
+    width: 5px;
+    display: inline-block;
+    content: "\00d7"; /* This will render the 'X' */
+  }
 
 @media (max-width: 800px) {
     #main {

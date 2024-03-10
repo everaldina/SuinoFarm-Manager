@@ -74,4 +74,8 @@ export class AuthComponent {
 
     formulario.reset();
   }
+
+  fecharAlerta() {
+    this.temErro = false;
+  }
 }

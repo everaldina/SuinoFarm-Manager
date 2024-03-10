@@ -26,6 +26,7 @@ import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.compon
 import { AuthComponent } from './components/auth/auth.component';
 
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 const routes: Routes = [
   { path: 'cadastroPeso', component: CadastroPesoComponent },
@@ -44,7 +45,8 @@ const routes: Routes = [
     GraficoPesoComponent,
     CadastroPesoComponent,
     EdicaoPesoComponent,
-    AuthComponent
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
