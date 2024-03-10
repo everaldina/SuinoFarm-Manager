@@ -32,14 +32,13 @@ export class DatabaseService {
   getSuinos(): Observable<Suino[]> {
     return this.http
       .get<Suino[]>(this.endpoint + '/suinos.json')
-      .pipe(retry(2), catchError(this.handleError))
-      //.subscribe((response) => {
-      //  for (const key in response) {
-      //    if (response.hasOwnProperty(key)) {
-      //      suinos.push({ ...response[key], id: key });
-      //    }
-      //  }
-      ;
+      .pipe(retry(2), catchError(this.handleError));
+    //.subscribe((response) => {
+    //  for (const key in response) {
+    //    if (response.hasOwnProperty(key)) {
+    //      suinos.push({ ...response[key], id: key });
+    //    }
+    //  }
   }
 
   getSuino(id: string): Observable<Suino> {
@@ -50,55 +49,64 @@ export class DatabaseService {
 
   getSuinosByPai(brinco_pai: string): Observable<Suino[]> {
     return this.http
-      .get<Suino[]>(this.endpoint + `/suinos.json?orderBy="brincoPai"&equalTo="${brinco_pai}"`
+      .get<Suino[]>(
+        this.endpoint +
+          `/suinos.json?orderBy="brincoPai"&equalTo="${brinco_pai}"`
       )
-      .pipe(retry(2), catchError(this.handleError))
-      //.subscribe((response) => {
-      //  for (const key in response) {
-      //    if (response.hasOwnProperty(key)) {
-      //      suinos.push({ ...response[key], id: key });
-      //    }
-      //  }
-      ;
+      .pipe(retry(2), catchError(this.handleError));
+    //.subscribe((response) => {
+    //  for (const key in response) {
+    //    if (response.hasOwnProperty(key)) {
+    //      suinos.push({ ...response[key], id: key });
+    //    }
+    //  }
   }
 
-  getSuinosByMae(brinco_mae: string): Observable<Suino[]>{
+  getSuinosByMae(brinco_mae: string): Observable<Suino[]> {
     return this.http
-      .get<Suino[]>(this.endpoint + `/suinos.json?orderBy="brincoPai"&equalTo="${brinco_mae}"`
+      .get<Suino[]>(
+        this.endpoint +
+          `/suinos.json?orderBy="brincoPai"&equalTo="${brinco_mae}"`
       )
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getSuinosByStatus(status: string): Observable<Suino[]>{
+  getSuinosByStatus(status: string): Observable<Suino[]> {
     return this.http
-      .get<Suino[]>(this.endpoint + `/suinos.json?orderBy="status"&equalTo="${status}"`
+      .get<Suino[]>(
+        this.endpoint + `/suinos.json?orderBy="status"&equalTo="${status}"`
       )
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getSuinosBySexo(sexo: string): Observable<Suino[]>{
+  getSuinosBySexo(sexo: string): Observable<Suino[]> {
     return this.http
-      .get<Suino[]>(this.endpoint + `/suinos.json?orderBy="sexo"&equalTo="${sexo}"`
+      .get<Suino[]>(
+        this.endpoint + `/suinos.json?orderBy="sexo"&equalTo="${sexo}"`
       )
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getSuinosByDataNascimento(data_nascimento: Date): Observable<Suino[]>{
-    let dataPesquisa = `${data_nascimento.getFullYear()}-${data_nascimento.getMonth()}-${data_nascimento.getDate()}`
+  getSuinosByDataNascimento(data_nascimento: Date): Observable<Suino[]> {
+    let dataPesquisa = `${data_nascimento.getFullYear()}-${data_nascimento.getMonth()}-${data_nascimento.getDate()}`;
     return this.http
-      .get<Suino[]>(this.endpoint + `/suinos.json?orderBy="dataNascimento"&equalTo="${dataPesquisa}"`
+      .get<Suino[]>(
+        this.endpoint +
+          `/suinos.json?orderBy="dataNascimento"&equalTo="${dataPesquisa}"`
       )
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getSuinosByDataSaida(data_saida: Date): Observable<Suino[]>{
+  getSuinosByDataSaida(data_saida: Date): Observable<Suino[]> {
     let ano = data_saida.getFullYear();
-    let mes = (data_saida.getMonth()).toString().padStart(2, '0')
-    let dia = data_saida.getDate().toString().padStart(2, '0')
+    let mes = data_saida.getMonth().toString().padStart(2, '0');
+    let dia = data_saida.getDate().toString().padStart(2, '0');
 
     let dataPesquisa = `${ano}-${mes}-${dia}`;
     return this.http
-      .get<Suino[]>(this.endpoint + `/suinos.json?orderBy="dataSaida"&equalTo="${dataPesquisa}"`
+      .get<Suino[]>(
+        this.endpoint +
+          `/suinos.json?orderBy="dataSaida"&equalTo="${dataPesquisa}"`
       )
       .pipe(retry(2), catchError(this.handleError));
   }
@@ -114,30 +122,34 @@ export class DatabaseService {
   getPesos(id: string): Observable<MedidaPeso[]> {
     return this.http
       .get<MedidaPeso[]>(this.endpoint + `/suinos/pesos/${id}.json`)
-      .pipe(retry(2), catchError(this.handleError))
-      //.subscribe((response) => {
-      //  for (const key in response) {
-      //    if (response.hasOwnProperty(key)) {
-      //      pesos.push({ ...response[key], id: key });
-      //    }
-      //  }
-      ;
+      .pipe(retry(2), catchError(this.handleError));
+    //.subscribe((response) => {
+    //  for (const key in response) {
+    //    if (response.hasOwnProperty(key)) {
+    //      pesos.push({ ...response[key], id: key });
+    //    }
+    //  }
   }
 
-  getPeso(id_porco: string, id_medida: string): Observable<MedidaPeso>{
+  getPeso(id_porco: string, id_medida: string): Observable<MedidaPeso> {
     return this.http
-      .get<MedidaPeso>(this.endpoint + `/suinos/pesos/${id_porco}/${id_medida}.json`)
+      .get<MedidaPeso>(
+        this.endpoint + `/suinos/pesos/${id_porco}/${id_medida}.json`
+      )
       .pipe(retry(2), catchError(this.handleError));
   }
 
   updatePeso(id_porco: string, peso: MedidaPeso) {
-    return this.http
+    this.http
       .put<MedidaPeso>(
         this.endpoint + `/suinos/pesos/${id_porco}/${peso.id}.json`,
         peso,
         this.httpOptions
       )
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.handleError))
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 
   handleError(error: HttpErrorResponse) {

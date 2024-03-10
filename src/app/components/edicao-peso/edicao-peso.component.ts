@@ -63,9 +63,7 @@ export class EdicaoPesoComponent {
       };
 
       this.databaseService.updatePeso(this.selectedSuino.id, medidaPeso);
-      
-      //recarregar a pagina
-      window.location.reload();
+      this.formEdicao.reset();
     }
   }
 }
