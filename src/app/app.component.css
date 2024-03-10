@@ -46,12 +46,6 @@ nav {
     font-size: larger;
 }
 
-#main-header{
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
 button{
     width: 20%;
     margin-right: 20px;
