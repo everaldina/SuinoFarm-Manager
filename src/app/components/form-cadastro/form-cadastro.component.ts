@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { DatabaseService } from '../../services/database.service';
+import { Suino } from '../../models/suino';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-form-cadastro',
   templateUrl: './form-cadastro.component.html',
@@ -12,7 +14,7 @@ export class FormCadastroComponent {
   listaStatus: string[] = ['Ativo', 'Vendido', 'Morto'];
   listaSexos: string[] = ['M', 'F'];
 
-  constructor(){
+  constructor(private database: DatabaseService, private datePipe: DatePipe) {
     this.formularioSuino = new FormGroup({
       'brincoAnimal': new FormControl(null, [
           Validators.required,
@@ -48,9 +50,24 @@ export class FormCadastroComponent {
   }
 
   onSubmit(){
-    if(this.formularioSuino.valid)
-      console.log("Formulário válido", this.formularioSuino.value);
-    else
-      console.log("Formulário inválido")
+    if(this.formularioSuino.valid){
+      let resposta = this.formularioSuino.value;
+      let suino: Suino = {
+        id: '',
+        brincoAnimal: resposta.brincoAnimal,
+        brincoPai: resposta.brincoPai,
+        brincoMae: resposta.brincoMae,
+        dataNascimento: this.datePipe.transform(resposta.dataNascimento, 'yyyy-MM-dd') ?? '',
+        dataSaida: this.datePipe.transform(resposta.dataSaida, 'yyyy-MM-dd') ?? '',
+        status: resposta.status,
+        sexo: resposta.sexo
+      }
+      console.log("Formulário válido", suino);
+      this.database.addSuino(suino);
+      this.formularioSuino.reset();
+    }
+    else{
+      console.log("Formulário inválido");
+    }
   }
 }
