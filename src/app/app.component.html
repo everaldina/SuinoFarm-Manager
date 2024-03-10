@@ -1,9 +1,17 @@
 <div id="header">
     <nav>
       <div class="navbar-left">
-        <button mat-raised-button color="primary" (click)="fechar()">Home</button>
+        <button mat-raised-button color="primary" (click)="paraHome()">Home</button>
       </div>
-      <div class="navbar-right">
+      <div *ngIf="!isLogged">
+        <div class="navbar-right">
+          <button mat-raised-button color="primary" (click)="paraLogin()">
+              Login
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="isLogged" class="navbar-right">
         <button mat-raised-button color="primary" (click)="paraFormCadastro()">
             Cadastro de suíno
         </button>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AutenticacaoService } from './services/autenticacao.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'SuinoFarm-Manager';
+  isLogged: boolean;
 
-  constructor(private rotas: Router, private rotaAtiva: ActivatedRoute){
-    
+  constructor(private rotas: Router, private rotaAtiva: ActivatedRoute, private autenticacao: AutenticacaoService) {
+    this.isLogged = autenticacao.isLoggedIn();
   }
 
   paraCadastroPeso() {
@@ -33,7 +35,11 @@ export class AppComponent {
     this.rotas.navigate(['listaSuinos']);
   }
 
-  fechar() {
+  paraLogin() {
+    this.rotas.navigate(['login']);
+  }
+
+  paraHome() {
     this.rotas.navigate(['']);
   }
   

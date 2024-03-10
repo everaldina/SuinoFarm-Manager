@@ -25,15 +25,16 @@ import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.
 import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.component';
 import { AuthComponent } from './components/auth/auth.component';
 
+import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 const routes: Routes = [
-  { path: 'cadastroPeso', component: CadastroPesoComponent },
-  { path: 'edicaoPeso', component: EdicaoPesoComponent },
-  { path: 'formCadastro', component: FormCadastroComponent },
-  { path: 'graficoPeso', component: GraficoPesoComponent },
-  { path: 'listaSuinos', component: ListaSuinosComponent },
+  { path: 'cadastroPeso', component: CadastroPesoComponent, canActivate: [AuthGuard] },
+  { path: 'edicaoPeso', component: EdicaoPesoComponent, canActivate: [AuthGuard] },
+  { path: 'formCadastro', component: FormCadastroComponent, canActivate: [AuthGuard] },
+  { path: 'graficoPeso', component: GraficoPesoComponent, canActivate: [AuthGuard] },
+  { path: 'listaSuinos', component: ListaSuinosComponent, canActivate: [AuthGuard] },
   { path: 'login', component: AuthComponent }
 ];
 

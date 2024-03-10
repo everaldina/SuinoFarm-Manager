@@ -33,14 +33,13 @@ export class AuthComponent {
     if(this.modoLogin){
       this.authService.loginUser(email, password).subscribe(
         responseData => {
-          console.log(responseData);
           this.estaCarregando = false;
           this.temErro = false;
-          this.router.navigate(['/pecas']);
+          this.router.navigate(['/']);
         }
       );
     } else {
-      if (formulario.value.password !== formulario.value.confirmPassword){
+      if (formulario.value.password !== formulario.value.check_password){
         this.erro = 'As senhas não conferem.';
         this.temErro = true;
         this.estaCarregando = false;
@@ -49,10 +48,9 @@ export class AuthComponent {
 
       this.authService.signupUser(email, password).subscribe(
         responseData => {
-          console.log(responseData);
           this.estaCarregando = false;
           this.temErro = false;
-          this.router.navigate(['/pecas']);
+          this.router.navigate(['/']);
         },
         error => {
           console.log(error);
