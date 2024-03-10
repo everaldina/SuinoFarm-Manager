@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from '../../services/database.service';
 import { Suino } from '../../models/suino';
+import { MedidaPeso } from '../../models/medida-peso';
 
 @Component({
   selector: 'app-cadastro-peso',
@@ -11,6 +12,7 @@ import { Suino } from '../../models/suino';
 export class CadastroPesoComponent {
   formCadastro: FormGroup;
   suinos: Suino[] = [];
+  cadastroPeso = new FormControl('', Validators.required);
 
   constructor(private formBuilder: FormBuilder, private databaseService: DatabaseService) {
     this.formCadastro = this.formBuilder.group({
@@ -32,9 +34,21 @@ export class CadastroPesoComponent {
 
   cadastrarPeso(): void {
     if (this.formCadastro.valid) {
-      console.log(this.formCadastro.value);
       
-      this.formCadastro.reset();
+      let peso: MedidaPeso = {
+        id : '',
+        data_medida: this.formCadastro.value.data,
+        peso: this.formCadastro.value.peso
+      };
+
+      let id = this.suinos.find(suino => suino.brincoAnimal === this.formCadastro.value.brinco)?.id;
+      console.log(id);
+
+      if (id) {
+        this.databaseService.addPeso(id, peso);
+
+        this.formCadastro.reset();
+      }
     }
   }
 }
