@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatabaseService } from '../../services/database.service';
+import { Suino } from '../../models/suino';
 
 @Component({
   selector: 'app-cadastro-peso',
@@ -7,16 +10,16 @@ import { Component } from '@angular/core';
 })
 export class CadastroPesoComponent {
   formCadastro: FormGroup;
-  suinos: any[];
+  suinos: Suino[] = [];
 
-  constructor(private formBuilder: FormBuilder, private suinoService: SuinoService) {
+  constructor(private formBuilder: FormBuilder, private databaseService: DatabaseService) {
     this.formCadastro = this.formBuilder.group({
       brinco: ['', Validators.required],
       data: ['', Validators.required],
       peso: ['', Validators.required]
     });
 
-    this.suinoService.suinos$.subscribe(suinos => {
+    this.databaseService.getSuinos().subscribe((suinos: Suino[]) => {
       this.suinos = suinos;
     });
   }
