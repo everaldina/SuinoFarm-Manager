@@ -42,5 +42,4 @@ export class AppComponent {
   paraHome() {
     this.rotas.navigate(['']);
   }
-  
 }

@@ -29,8 +29,6 @@ export class CadastroPesoComponent {
          }
        }
     });
-
-    console.log(this.suinos);
   }
 
   cadastrarPeso(): void {
@@ -43,7 +41,6 @@ export class CadastroPesoComponent {
       };
 
       let id = this.suinos.find(suino => suino.brincoAnimal === this.formCadastro.value.brinco)?.id;
-      console.log(id);
 
       if (id) {
         this.databaseService.addPeso(id, peso);

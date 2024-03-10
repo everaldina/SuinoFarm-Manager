@@ -35,6 +35,11 @@ export class EdicaoPesoComponent {
   onBrincoSelectionChange(brinco: string) {
     this.selectedSuino = this.suinos.find(suino => suino.brincoAnimal === brinco);
 
+    this.formEdicao.get('data')?.setValue('');
+    this.formEdicao.get('peso')?.setValue('');
+
+    this.pesagens = [];
+
     if (this.selectedSuino) {
       this.databaseService.getPesos(this.selectedSuino.id).subscribe((response) => {
         for (const key in response) {
