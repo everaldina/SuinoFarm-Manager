@@ -4,7 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -22,15 +23,17 @@ import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.com
 import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.component';
 import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
 import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.component';
+import { AuthComponent } from './components/auth/auth.component';
 
-import { DatePipe } from '@angular/common';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 const routes: Routes = [
   { path: 'cadastroPeso', component: CadastroPesoComponent },
   { path: 'edicaoPeso', component: EdicaoPesoComponent },
   { path: 'formCadastro', component: FormCadastroComponent },
   { path: 'graficoPeso', component: GraficoPesoComponent },
-  { path: 'listaSuinos', component: ListaSuinosComponent }
+  { path: 'listaSuinos', component: ListaSuinosComponent },
+  { path: 'login', component: AuthComponent }
 ];
 
 @NgModule({
@@ -40,7 +43,8 @@ const routes: Routes = [
     ListaSuinosComponent,
     GraficoPesoComponent,
     CadastroPesoComponent,
-    EdicaoPesoComponent
+    EdicaoPesoComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +62,11 @@ const routes: Routes = [
     MatButtonModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     provideAnimationsAsync(),
     DatePipe
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
