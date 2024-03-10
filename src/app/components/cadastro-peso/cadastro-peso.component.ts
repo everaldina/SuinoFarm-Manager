@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from '../../services/database.service';
 import { Suino } from '../../models/suino';
 
@@ -19,19 +19,23 @@ export class CadastroPesoComponent {
       peso: ['', Validators.required]
     });
 
-    this.databaseService.getSuinos().subscribe((suinos: Suino[]) => {
-      this.suinos = suinos;
+    this.databaseService.getSuinos().subscribe((response) => {
+       for (const key in response) {
+         if (response.hasOwnProperty(key)) {
+           this.suinos.push({ ...response[key], id: key });
+         }
+       }
     });
+
+    console.log(this.suinos);
   }
 
-    cadastrarPeso(): void {
-      if (this.formCadastro.valid) {
-        console.log(this.formCadastro.value);
-        // Aqui você pode enviar os dados para o backend
-        this.formCadastro.reset();
-      } else {
-        alert('Por favor, preencha todos os campos corretamente.');
-      }
+  cadastrarPeso(): void {
+    if (this.formCadastro.valid) {
+      console.log(this.formCadastro.value);
+      
+      this.formCadastro.reset();
     }
   }
+}
 
