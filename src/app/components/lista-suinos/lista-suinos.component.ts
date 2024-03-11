@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../services/database.service';
 import { Suino } from '../../models/suino';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-suinos',
@@ -11,8 +12,9 @@ import { DatePipe } from '@angular/common';
 export class ListaSuinosComponent {
   listaSuinos: Suino[] = [];
   listaFiltrada: Suino[] = [];
+  animalExpandidoIndex: number | null | undefined;
 
-  constructor(private dataBase: DatabaseService, private dataPipe: DatePipe) {
+  constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router) {
     this.dataBase.getSuinos().subscribe((response) => {
       for (const key in response) {
         if (response.hasOwnProperty(key) && typeof response[key] === 'object') {
@@ -25,7 +27,6 @@ export class ListaSuinosComponent {
     });
     this.listaFiltrada = this.listaSuinos;
   }
-
 
   filtrarDataNascimento(data: Date){
     let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
@@ -56,5 +57,21 @@ export class ListaSuinosComponent {
     return this.listaSuinos.filter(suino => suino.status === status);
   }
 
+  expandirAnimal(index: number) {
+    this.animalExpandidoIndex = index === this.animalExpandidoIndex ? null : index;
+  }
 
+  alterarStatus(suino: Suino, status: "Ativo" | "Vendido" | "Morto") {
+    suino.status = status;
+    this.dataBase.updateSuino(suino.id, suino);
+  }
+
+  excluirAnimal(id: string) {
+    this.dataBase.deleteSuino(id);
+
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
 }

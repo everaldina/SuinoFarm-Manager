@@ -1,1 +1,29 @@
-<p>lista-suinos works!</p>
+<h1>Suínos</h1>
+
+<div class="appointment-list">
+    <section *ngFor="let suino of listaFiltrada; let i = index">
+        <h2> {{ suino.brincoAnimal}} </h2>
+        <span> Data de Nascimento: {{ suino.dataNascimento }} </span>
+        <br>
+        <span> Status: {{ suino.status }} </span>
+        <br>
+        <span> Sexo: {{ suino.sexo }}</span>
+
+        <div *ngIf="animalExpandidoIndex === i">
+            <br>
+            <span> Brinco da Mãe: {{ suino.brincoMae }} </span>
+            <br>
+            <span> Brinco do pai: {{ suino.brincoPai }} </span>
+            <br>
+            <span> Data de saída: {{ suino.dataSaida }} </span>
+        </div>
+        
+        <button (click)="expandirAnimal(i)">
+            {{ animalExpandidoIndex === i ? 'Recolher Detalhes' : 'Expandir Detalhes' }}
+        </button>
+        
+        <!-- <button (click)="excluirAnimal(suino.id)">
+            Excluir
+        </button> -->
+    </section>
+</div>
