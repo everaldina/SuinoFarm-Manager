@@ -1,3 +1,3 @@
 export const environment = {
-    apiKey: 'SUA_CHAVE_API'
+    apiKey: 'AIzaSyA-GoCPIUPAGff3XhsiOd-IsOviBBQQOOE'
 };

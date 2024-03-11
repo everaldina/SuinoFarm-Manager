@@ -9,10 +9,9 @@ import { AutenticacaoService } from './services/autenticacao.service';
 })
 export class AppComponent {
   title = 'SuinoFarm-Manager';
-  isLogged: boolean;
 
   constructor(private rotas: Router, private rotaAtiva: ActivatedRoute, private autenticacao: AutenticacaoService) {
-    this.isLogged = autenticacao.isLoggedIn();
+
   }
 
   paraCadastroPeso() {
@@ -41,5 +40,9 @@ export class AppComponent {
 
   paraHome() {
     this.rotas.navigate(['']);
+  }
+
+  isLoggedIn(): boolean {
+    return this.autenticacao.isLoggedIn();
   }
 }

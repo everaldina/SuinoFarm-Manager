@@ -1,17 +1,19 @@
 <div id="header">
-    <nav>
+    <nav *ngIf="!isLoggedIn()">
+      <div class="navbar-right">
+        <div id="login" (click)="paraLogin()">
+          <mat-icon>person</mat-icon>
+          <span >Login</span>
+        </div>
+      </div>
+    </nav>
+
+    <nav *ngIf="isLoggedIn()">
       <div class="navbar-left">
         <button mat-raised-button color="primary" (click)="paraHome()">Home</button>
       </div>
-      <div *ngIf="!isLogged">
-        <div class="navbar-right">
-          <button mat-raised-button color="primary" (click)="paraLogin()">
-              Login
-          </button>
-        </div>
-      </div>
 
-      <div *ngIf="isLogged" class="navbar-right">
+      <div class="navbar-right">
         <button mat-raised-button color="primary" (click)="paraFormCadastro()">
             Cadastro de suíno
         </button>

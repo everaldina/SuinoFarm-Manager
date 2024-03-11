@@ -34,12 +34,12 @@ nav {
     justify-content: flex-end;
 }
 
-.navbar-right a:hover {
+.navbar-right div:hover {
     color: black;
     background-color: #fff;
 }
 
-.navbar-right a {
+.navbar-right div {
     margin-left: 10px;
     color: #fff;
     text-decoration: none;
@@ -49,4 +49,19 @@ nav {
 button{
     width: 20%;
     margin-right: 20px;
+}
+
+#login {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+#login:hover {
+    color: black;
+    background-color: #fff;
+    cursor: pointer;
 }
