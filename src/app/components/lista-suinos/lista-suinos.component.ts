@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../../services/database.service';
-import { Suino } from '../../models/suino';
 import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Suino } from '../../models/suino';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-lista-suinos',
@@ -13,6 +13,8 @@ export class ListaSuinosComponent {
   listaSuinos: Suino[] = [];
   listaFiltrada: Suino[] = [];
   animalExpandidoIndex: number | null | undefined;
+  valorFiltro: string = '';
+  valorPesquisa: any = '';
 
   constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router) {
     this.dataBase.getSuinos().subscribe((response) => {
@@ -30,10 +32,7 @@ export class ListaSuinosComponent {
 
   filtrarDataNascimento(data: Date){
     let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
-    return this.listaSuinos.filter(suino =>{
-      suino.dataNascimento === data_pesquisa
-    }
-      );
+    return this.listaSuinos.filter(suino => suino.dataNascimento === data_pesquisa);
   }
 
   filtrarDataSaida(data: Date){
@@ -73,5 +72,35 @@ export class ListaSuinosComponent {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
+  }
+
+  filtrarListagem(filtro: string)
+  {
+    switch (filtro)
+    {
+      case 'brincoPai':
+        this.listaFiltrada = this.filtrarPai(this.valorPesquisa.toString());
+        break;
+
+      case 'brincoMae':
+        this.listaFiltrada = this.filtrarMae(this.valorPesquisa.toString());
+        break;
+
+      case 'dataNascimento':
+        this.listaFiltrada = this.filtrarDataNascimento(this.valorPesquisa);
+        break;
+
+      case 'dataSaida':
+        this.listaFiltrada = this.filtrarDataSaida(this.valorPesquisa);
+        break;
+
+      case 'sexo':
+        this.listaFiltrada = this.filtrarSexo(this.valorPesquisa);
+        break;
+
+      case 'status':
+        this.listaFiltrada = this.filtrarStatus(this.valorPesquisa);
+        break;
+    }
   }
 }
