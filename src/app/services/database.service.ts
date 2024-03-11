@@ -29,6 +29,44 @@ export class DatabaseService {
       });
   }
 
+  deleteSuino(id: string) {
+    let existePesos = false;
+    this.http
+      .get(this.endpoint + `/suinos/${id}/pesos.json`)
+      .subscribe((response) => {
+        if (response !== null) {
+          existePesos = true;
+        }
+      });
+
+    if (existePesos) {
+      this.http
+        .delete(this.endpoint + `/suinos/pesos/${id}.json`)
+        .subscribe((response) => {
+          console.log(response);
+        });
+    }
+
+    this.http
+      .delete(this.endpoint + `/suinos/${id}.json`)
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
+  updateSuino(id: string, suino: Suino) {
+    this.http
+      .put<Suino>(
+        this.endpoint + `/suinos/${id}.json`,
+        suino,
+        this.httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError))
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
   getSuinos(): Observable<Suino[]> {
     return this.http
       .get<Suino[]>(this.endpoint + '/suinos.json')
