@@ -1,6 +1,6 @@
 <div id="header">
-    <nav *ngIf="!isLoggedIn()">
-      <div class="navbar-right">
+    <nav *ngIf="!isLoggedIn()" id="navLogin">
+      <div >
         <div id="login" (click)="paraLogin()">
           <mat-icon>person</mat-icon>
           <span >Login</span>
@@ -10,30 +10,32 @@
 
     <nav *ngIf="isLoggedIn()">
       <div class="navbar-left">
-        <button mat-raised-button color="primary" (click)="paraHome()">Home</button>
+        <div id="home" (click)="paraHome()">
+          <mat-icon>home</mat-icon>
+          <span >Home</span>
+        </div>
       </div>
 
       <div class="navbar-right">
-        <button mat-raised-button color="primary" (click)="paraFormCadastro()">
-            Cadastro de suíno
-        </button>
-    
-        <button mat-raised-button color="primary" (click)="paraListaSuinos()">
-            Listagem de suínos
-        </button>
-    
-        <button mat-raised-button color="primary" (click)="paraCadastroPeso()">
-            Cadastro de peso
-        </button>
-    
-        <button mat-raised-button color="primary" (click)="paraEdicaoPeso()">
-            Edição de peso
-        </button>
-
-        <button mat-raised-button color="primary" (click)="paraGraficoPeso()">
-            Controle de peso
-        </button>
-
+        <div (click)="paraFormCadastro()">
+          <span>Cadastrar Suíno</span>
+        </div>
+        
+        <div (click)="paraListaSuinos()">
+          <span>Listar Suínos</span>
+        </div>
+        
+        <div (click)="paraCadastroPeso()">
+          <span>Cadastrar Peso</span>
+        </div>
+        
+        <div (click)="paraEdicaoPeso()">
+          <span>Editar Peso</span>
+        </div>
+        
+        <div (click)="paraGraficoPeso()">
+          <span>Controle de Peso</span>
+        </div>
       </div>
     </nav>
 </div>
