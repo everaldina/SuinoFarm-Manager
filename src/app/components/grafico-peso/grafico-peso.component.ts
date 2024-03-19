@@ -26,67 +26,65 @@ export class GraficoPesoComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.delay(1000).then(() => {
-      if (this.selectedSuino) {
-        this.pesagens = [];
-        this.databaseService.getPesos(this.selectedSuino.id).subscribe((response) => {
-          for (const key in response) {
-            if (response.hasOwnProperty(key)) {
-              this.pesagens.push({ ...response[key], id: key });
+    if (this.selectedSuino) {
+      this.pesagens = [];
+      this.databaseService.getPesos(this.selectedSuino.id).subscribe((response) => {
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            this.pesagens.push({ ...response[key], id: key });
+          }
+        }
+      });
+
+      
+      if (this.chart) {
+        this.chart.destroy();
+      }
+      
+      this.delay(1000).then(() => {
+        Chart.register(...registerables);
+        
+        let pesagensOrdenadas = this.pesagens;
+        pesagensOrdenadas.sort((a, b) => {
+          const dataA = new Date(a.data_medida);
+          const dataB = new Date(b.data_medida);
+          
+          if (dataA < dataB) {
+            return -1;
+          }
+          if (dataA > dataB) {
+            return 1;
+          }
+          return 0;
+        });
+        
+        const labelsSuino = pesagensOrdenadas.map(item => item.data_medida);
+        const dataSuino = pesagensOrdenadas.map(item => item.peso);
+
+        console.log(labelsSuino);
+        console.log(dataSuino);
+
+        this.chart = new Chart(this.elemento.nativeElement, {
+          type: 'line',
+          data: {
+            labels: labelsSuino,
+            datasets: [
+              {
+                label: "Peso (Kg)",
+                data: dataSuino
+              }
+            ]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
             }
           }
         });
-
-        
-        if (this.chart) {
-          this.chart.destroy();
-        }
-        
-        this.delay(1000).then(() => {
-          Chart.register(...registerables);
-          
-          let pesagensOrdenadas = this.pesagens;
-          pesagensOrdenadas.sort((a, b) => {
-            const dataA = new Date(a.data_medida);
-            const dataB = new Date(b.data_medida);
-            
-            if (dataA < dataB) {
-              return -1;
-            }
-            if (dataA > dataB) {
-              return 1;
-            }
-            return 0;
-          });
-          
-          const labelsSuino = pesagensOrdenadas.map(item => item.data_medida);
-          const dataSuino = pesagensOrdenadas.map(item => item.peso);
-
-          console.log(labelsSuino);
-          console.log(dataSuino);
-
-          this.chart = new Chart(this.elemento.nativeElement, {
-            type: 'line',
-            data: {
-              labels: labelsSuino,
-              datasets: [
-                {
-                  label: "Peso (Kg)",
-                  data: dataSuino
-                }
-              ]
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
-              }
-            }
-          });
-        });
-      }
-    });
+      });
+    }
   }
 
   delay(ms: number) {
