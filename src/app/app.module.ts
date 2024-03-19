@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'cadastroPeso', component: CadastroPesoComponent, canActivate: [AuthGuard] },
   { path: 'edicaoPeso', component: EdicaoPesoComponent, canActivate: [AuthGuard] },
   { path: 'formCadastro', component: FormCadastroComponent, canActivate: [AuthGuard] },
-  { path: 'graficoPeso', component: GraficoPesoComponent, canActivate: [AuthGuard] },
+  { path: 'graficoPeso/:id', component: GraficoPesoComponent, canActivate: [AuthGuard] },
   { path: 'listaSuinos', component: ListaSuinosComponent, canActivate: [AuthGuard] },
   { path: 'login', component: AuthComponent }
 ];

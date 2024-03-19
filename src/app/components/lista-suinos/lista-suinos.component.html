@@ -70,8 +70,20 @@
             {{ animalExpandidoIndex === i ? 'Recolher Detalhes' : 'Expandir Detalhes' }}
         </button>
 
-        <button [ngStyle]="{'background-color': 'red'}" (click)="excluirAnimal(suino.id)">
-            Excluir
+        <button (click)="exibirGrafico(suino)" [ngStyle]="{'background-color': 'green'}">
+          {{ suinoParaGrafico && suinoParaGrafico.id === suino.id ? 'Esconder Gráfico' : 'Exibir Gráfico' }}
         </button>
+        
+        <!-- <button [ngStyle]="{'background-color': 'green'}" (click)="editarAnimal(suino.id)">
+          Editar
+        </button> -->
+        
+        <!-- <br>
+        <br>
+        <button [ngStyle]="{'background-color': 'red'}" (click)="excluirAnimal(suino.id)">
+          Excluir
+        </button> -->
+
+        <app-grafico-peso *ngIf="suinoParaGrafico && suinoParaGrafico.id === suino.id" [selectedSuino]="suino"></app-grafico-peso>
     </section>
 </div>

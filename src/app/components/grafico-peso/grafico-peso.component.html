@@ -1,15 +1,3 @@
-<form [formGroup]="formEdicao">
-
-  <mat-form-field>
-    <mat-label>Selecione o número do brinco do Suíno:</mat-label>
-    <mat-select formControlName="brinco" (selectionChange)="onBrincoSelectionChange($event.value)" required>
-      <mat-option *ngFor="let suino of suinos" [value]="suino.brincoAnimal">{{ suino.brincoAnimal }}</mat-option>
-    </mat-select><br>
-    <mat-error *ngIf="formEdicao.get('brinco')?.invalid">Selecione o número do brinco do Suíno</mat-error>
-  </mat-form-field>
-
-</form>
-
 <div id="canvaDiv">
   <canvas #meuCanvas ></canvas>
 </div>

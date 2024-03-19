@@ -26,10 +26,6 @@ export class AppComponent {
     this.rotas.navigate(['formCadastro']);
   }
 
-  paraGraficoPeso() {
-    this.rotas.navigate(['graficoPeso']);
-  }
-
   paraListaSuinos() {
     this.rotas.navigate(['listaSuinos']);
   }

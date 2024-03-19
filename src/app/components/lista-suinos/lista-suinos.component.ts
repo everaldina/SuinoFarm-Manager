@@ -9,12 +9,14 @@ import { DatabaseService } from '../../services/database.service';
   templateUrl: './lista-suinos.component.html',
   styleUrl: './lista-suinos.component.css',
 })
+
 export class ListaSuinosComponent {
   listaSuinos: Suino[] = [];
   listaFiltrada: Suino[] = [];
   animalExpandidoIndex: number | null | undefined;
   valorFiltro: string = '';
   valorPesquisa: any = '';
+  suinoParaGrafico: Suino = {} as Suino;
 
   constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router) {
     this.dataBase.getSuinos().subscribe((response) => {
@@ -74,10 +76,8 @@ export class ListaSuinosComponent {
     });
   }
 
-  filtrarListagem(filtro: string)
-  {
-    switch (filtro)
-    {
+  filtrarListagem(filtro: string){
+    switch (filtro){
       case 'brincoPai':
         this.listaFiltrada = this.filtrarPai(this.valorPesquisa.toString());
         break;
@@ -102,5 +102,17 @@ export class ListaSuinosComponent {
         this.listaFiltrada = this.filtrarStatus(this.valorPesquisa);
         break;
     }
+  }
+
+  limparFiltro(){
+    this.listaFiltrada = this.listaSuinos;
+    this.valorPesquisa = '';
+  }
+
+  exibirGrafico(suino: Suino) {
+    if (suino.id == this.suinoParaGrafico.id)
+      this.suinoParaGrafico = {} as Suino;
+    else
+      this.suinoParaGrafico = suino;
   }
 }
