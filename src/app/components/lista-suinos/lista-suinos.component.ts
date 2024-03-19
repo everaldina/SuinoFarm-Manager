@@ -74,10 +74,8 @@ export class ListaSuinosComponent {
     });
   }
 
-  filtrarListagem(filtro: string)
-  {
-    switch (filtro)
-    {
+  filtrarListagem(filtro: string){
+    switch (filtro){
       case 'brincoPai':
         this.listaFiltrada = this.filtrarPai(this.valorPesquisa.toString());
         break;

@@ -22,31 +22,23 @@ export class DatabaseService {
   };
 
   addSuino(suino: Suino) {
-    this.http
-      .post(this.endpoint + '/suinos.json', suino)
-      .subscribe((response) => {
-        console.log(response);
-      });
+    const brinco = suino.brincoAnimal
+
+    this.getSuinosByBrinco(brinco).subscribe((response) => {
+        if (Object.keys(response).length === 0) {
+          this.http
+            .post(this.endpoint + '/suinos.json', suino)
+            .subscribe((response) => {
+              console.log(response);
+            });
+        }else{
+          alert('Brinco já cadastrado');
+        }
+      }
+    );
   }
 
   deleteSuino(id: string) {
-    let existePesos = false;
-    this.http
-      .get(this.endpoint + `/suinos/${id}/pesos.json`)
-      .subscribe((response) => {
-        if (response !== null) {
-          existePesos = true;
-        }
-      });
-
-    if (existePesos) {
-      this.http
-        .delete(this.endpoint + `/suinos/pesos/${id}.json`)
-        .subscribe((response) => {
-          console.log(response);
-        });
-    }
-
     this.http
       .delete(this.endpoint + `/suinos/${id}.json`)
       .subscribe((response) => {
@@ -82,6 +74,12 @@ export class DatabaseService {
   getSuino(id: string): Observable<Suino> {
     return this.http
       .get<Suino>(this.endpoint + `/suinos/${id}.json`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getSuinosByBrinco(brinco: string): Observable<Suino> {
+    return this.http
+      .get<Suino>(this.endpoint + `/suinos.json?orderBy="brincoAnimal"&equalTo="${brinco}"`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -151,7 +149,7 @@ export class DatabaseService {
 
   addPeso(id: string, peso: MedidaPeso) {
     this.http
-      .post(this.endpoint + `/suinos/pesos/${id}.json`, peso)
+      .post(this.endpoint + `/suinos/${id}/pesos/.json`, peso)
       .subscribe((response) => {
         console.log(response);
       });
@@ -159,7 +157,7 @@ export class DatabaseService {
 
   getPesos(id: string): Observable<MedidaPeso[]> {
     return this.http
-      .get<MedidaPeso[]>(this.endpoint + `/suinos/pesos/${id}.json`)
+      .get<MedidaPeso[]>(this.endpoint + `/suinos/${id}/pesos/.json`)
       .pipe(retry(2), catchError(this.handleError));
     //.subscribe((response) => {
     //  for (const key in response) {
@@ -172,7 +170,7 @@ export class DatabaseService {
   getPeso(id_porco: string, id_medida: string): Observable<MedidaPeso> {
     return this.http
       .get<MedidaPeso>(
-        this.endpoint + `/suinos/pesos/${id_porco}/${id_medida}.json`
+        this.endpoint + `/suinos/${id_porco}/pesos/${id_medida}.json`
       )
       .pipe(retry(2), catchError(this.handleError));
   }
@@ -180,7 +178,7 @@ export class DatabaseService {
   updatePeso(id_porco: string, peso: MedidaPeso) {
     this.http
       .put<MedidaPeso>(
-        this.endpoint + `/suinos/pesos/${id_porco}/${peso.id}.json`,
+        this.endpoint + `/suinos/${id_porco}/pesos/${peso.id}.json`,
         peso,
         this.httpOptions
       )
