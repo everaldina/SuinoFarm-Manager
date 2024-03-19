@@ -73,15 +73,17 @@
         <button (click)="exibirGrafico(suino)" [ngStyle]="{'background-color': 'green'}">
           {{ suinoParaGrafico && suinoParaGrafico.id === suino.id ? 'Esconder Gráfico' : 'Exibir Gráfico' }}
         </button>
-                
-        <!-- Alterar o status do animal caso o status atual dele seja Ativo, podendo trocar para Vendido ou Inativo -->
-        <!-- <select *ngIf="suino.status === 'Ativo'" >
-          <option value="Vendido">Vendido</option>
-          <option value="Morto">Morto</option>
-        </select> -->
-
-        <div id="deletar" (click)="abreDialogoDelete(suino.id)">
-          <mat-icon>delete_forever</mat-icon>
+        
+        <div class="btnGroup">
+          <!-- <select *ngIf="suino.status === 'Ativo'" matNativeControl >
+            <option value="">Alterar Status</option>
+            <option value="Vendido">Vendido</option>
+            <option value="Morto">Morto</option>
+          </select> -->
+  
+          <div id="deletar" (click)="abreDialogoDelete(suino.id)">
+            <mat-icon>delete_forever</mat-icon>
+          </div>
         </div>
 
         <div *ngIf="suinoParaGrafico && suinoParaGrafico.id === suino.id">
