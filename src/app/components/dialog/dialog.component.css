@@ -1,0 +1,15 @@
+button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(85%);
+}
+
+mat-dialog-actions {
+    justify-content: center;
+}

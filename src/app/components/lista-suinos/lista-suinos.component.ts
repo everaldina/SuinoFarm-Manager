@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Suino } from '../../models/suino';
 import { DatabaseService } from '../../services/database.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-lista-suinos',
@@ -18,7 +20,7 @@ export class ListaSuinosComponent {
   valorPesquisa: any = '';
   suinoParaGrafico: Suino = {} as Suino;
 
-  constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router) {
+  constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router, private dialog: MatDialog) {
     this.dataBase.getSuinos().subscribe((response) => {
       for (const key in response) {
         if (response.hasOwnProperty(key) && typeof response[key] === 'object') {
@@ -114,5 +116,20 @@ export class ListaSuinosComponent {
       this.suinoParaGrafico = {} as Suino;
     else
       this.suinoParaGrafico = suino;
+  }
+
+  abreDialogoDelete(id: string): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: { message: 'Deseja realmente excluir este suíno?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.excluirAnimal(id);
+      } else {
+        console.log('Operação cancelada pelo usuário.');
+      }
+    });
   }
 }

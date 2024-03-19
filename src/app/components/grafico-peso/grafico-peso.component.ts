@@ -61,9 +61,6 @@ export class GraficoPesoComponent implements OnInit{
         const labelsSuino = pesagensOrdenadas.map(item => item.data_medida);
         const dataSuino = pesagensOrdenadas.map(item => item.peso);
 
-        console.log(labelsSuino);
-        console.log(dataSuino);
-
         this.chart = new Chart(this.elemento.nativeElement, {
           type: 'line',
           data: {

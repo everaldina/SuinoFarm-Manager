@@ -8,6 +8,7 @@ h1 {
 }
 
 .appointment-list section {
+    position: relative;
     background-color: #f4f4f4;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -35,12 +36,23 @@ h1 {
 }
 
 .appointment-list section button:hover {
-    background-color: #0056b3;
+    filter: brightness(85%);
 }
 
 .filtro {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* deixar na lateral superior direita */
+#deletar {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #dc3545;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
 }

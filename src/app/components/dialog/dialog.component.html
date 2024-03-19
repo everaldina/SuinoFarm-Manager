@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>Confirmação</h2>
+<mat-dialog-content>{{ data.message }}</mat-dialog-content>
+<mat-dialog-actions>
+    <button [ngStyle]="{'color': ''}" [mat-dialog-close]="false" cdkFocusInitial>Cancelar</button>
+    <button [ngStyle]="{'background-color': 'red'}" [mat-dialog-close]="true">Confirmar</button>
+</mat-dialog-actions>

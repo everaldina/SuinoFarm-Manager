@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { DatePipe } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -17,18 +18,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
 import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
 import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.component';
 import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
 import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 import { AuthComponent } from './components/auth/auth.component';
 
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 const routes: Routes = [
   { path: 'cadastroPeso', component: CadastroPesoComponent, canActivate: [AuthGuard] },
@@ -48,7 +50,8 @@ const routes: Routes = [
     CadastroPesoComponent,
     EdicaoPesoComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,8 @@ const routes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
