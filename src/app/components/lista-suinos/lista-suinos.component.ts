@@ -121,7 +121,10 @@ export class ListaSuinosComponent {
   abreDialogoDelete(id: string): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
-      data: { message: 'Deseja realmente excluir este suíno?' }
+      data: { 
+        title: 'Excluir suíno',
+        message: 'Deseja realmente excluir este suíno?' 
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
