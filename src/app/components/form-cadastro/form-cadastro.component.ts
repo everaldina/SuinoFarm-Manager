@@ -63,7 +63,9 @@ export class FormCadastroComponent {
         sexo: resposta.sexo
       }
       console.log("Formulário válido", suino);
-      this.database.addSuino(suino);
+
+      this.database.addSuino(suino)
+      
       this.formularioSuino.reset();
     }
     else{
