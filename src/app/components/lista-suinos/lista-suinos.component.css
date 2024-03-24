@@ -69,3 +69,15 @@ h1 {
     margin-right: 10px;
     cursor: pointer;
 }
+
+.container-flex {
+    display: flex;
+    align-items: flex-start;
+}
+
+#grafico {
+    margin-left: 5rem;
+    width: 700px;
+    border: #8d8d8d solid 1px;
+    background-color: white;
+}

@@ -49,7 +49,8 @@
 </div>
 
 <div class="appointment-list">
-    <section *ngFor="let suino of listaFiltrada; let i = index">
+    <section *ngFor="let suino of listaFiltrada; let i = index" class="container-flex">
+      <div>
         <h2> {{ suino.brincoAnimal}} </h2>
         <span> Data de Nascimento: {{ suino.dataNascimento }} </span>
         <br>
@@ -85,9 +86,10 @@
             <mat-icon>delete_forever</mat-icon>
           </div>
         </div>
+      </div>
 
-        <div *ngIf="suinoParaGrafico && suinoParaGrafico.id === suino.id">
-          <app-grafico-peso [selectedSuino]="suino"></app-grafico-peso>
-        </div>
+      <div *ngIf="suinoParaGrafico && suinoParaGrafico.id === suino.id" id="grafico">
+        <app-grafico-peso [selectedSuino]="suino"></app-grafico-peso>
+      </div>
     </section>
 </div>
