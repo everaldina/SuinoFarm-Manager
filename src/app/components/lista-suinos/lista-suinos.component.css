@@ -76,8 +76,22 @@ h1 {
 }
 
 #grafico {
-    margin-left: 5rem;
+    margin-left: 10rem;
     width: 700px;
     border: #8d8d8d solid 1px;
     background-color: white;
+}
+
+@media (max-width: 1400px) {
+    .container-flex {
+        flex-direction: column;
+        padding: auto;
+    }
+
+    #grafico {
+        margin-top: 2rem;
+        margin-left: 0;
+        width: 100%;
+    }
+    
 }

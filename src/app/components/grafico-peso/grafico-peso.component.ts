@@ -73,9 +73,31 @@ export class GraficoPesoComponent implements OnInit{
             ]
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Data da Medida'
+                },
+                ticks: {
+                  maxRotation: 90,
+                  minRotation: 90
+                }
+              },
               y: {
-                beginAtZero: true
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Peso (Kg)'
+                }
+              }
+            },
+            plugins: {
+              title: {
+                display: true,
+                text: 'Histórico de Peso'
               }
             }
           }
