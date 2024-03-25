@@ -20,6 +20,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
+
 import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
 import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
 import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.component';
@@ -28,17 +31,22 @@ import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.compon
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { AuthComponent } from './components/auth/auth.component';
-
-import { AuthGuard } from './auth/auth.guard';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { CadastroAtividadeComponent } from './components/cadastro-atividade/cadastro-atividade.component';
+import { CadastroSessaoComponent } from './components/cadastro-sessao/cadastro-sessao.component';
+import { ListaSessoesComponent } from './components/lista-sessoes/lista-sessoes.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  { path: 'login', component: AuthComponent },
+  { path: 'formCadastro', component: FormCadastroComponent, canActivate: [AuthGuard] },
   { path: 'cadastroPeso', component: CadastroPesoComponent, canActivate: [AuthGuard] },
   { path: 'edicaoPeso', component: EdicaoPesoComponent, canActivate: [AuthGuard] },
-  { path: 'formCadastro', component: FormCadastroComponent, canActivate: [AuthGuard] },
-  { path: 'graficoPeso/:id', component: GraficoPesoComponent, canActivate: [AuthGuard] },
   { path: 'listaSuinos', component: ListaSuinosComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: AuthComponent }
+  { path: 'graficoPeso/:id', component: GraficoPesoComponent, canActivate: [AuthGuard] },
+  { path: 'cadastroAtividade', component: CadastroAtividadeComponent, canActivate: [AuthGuard] },
+  { path: 'cadastroSessao', component: CadastroSessaoComponent, canActivate: [AuthGuard] },
+  { path: 'listaSessoes', component: ListaSessoesComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -52,6 +60,10 @@ const routes: Routes = [
     AuthComponent,
     LoadingSpinnerComponent,
     DialogComponent,
+    CadastroAtividadeComponent,
+    CadastroSessaoComponent,
+    ListaSessoesComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

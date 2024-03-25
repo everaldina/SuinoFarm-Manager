@@ -38,6 +38,18 @@ export class AppComponent {
     this.rotas.navigate(['']);
   }
 
+  paraCadastroAtividade() {
+    this.rotas.navigate(['cadastroAtividade']);
+  }
+
+  paraCadastroSessao() {
+    this.rotas.navigate(['cadastroSessao']);
+  }
+
+  paraListaSessoes() {
+    this.rotas.navigate(['listaSessoes']);
+  }
+
   isLoggedIn(): boolean {
     return this.autenticacao.isLoggedIn();
   }
