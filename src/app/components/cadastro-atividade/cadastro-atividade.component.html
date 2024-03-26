@@ -1,1 +1,10 @@
-<p>cadastro-atividade works!</p>
+<form [formGroup]="formularioAtividade" (ngSubmit)="onSubmit()" class="atividade-form">
+    
+    <mat-form-field>
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="descricao" />
+    </mat-form-field>
+  
+    <button type="submit">Cadastrar Atividade</button>
+  </form>
+  
