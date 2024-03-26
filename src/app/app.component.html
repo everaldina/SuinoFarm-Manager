@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="navbar-right">
+      <!-- <div class="navbar-right">
         <div (click)="paraFormCadastro()">
           <span>Cadastrar Suíno</span>
         </div>
@@ -36,6 +36,53 @@
         <div (click)="paraCadastroAtividade()">
           <span>Cadastrar Atividade</span>
         </div>
+
+        <div (click)="paraCadastroSessao()">
+          <span>Cadastrar Sessão</span>
+        </div>
+
+        <div (click)="paraListaSessoes()">
+          <span>Listar Sessões</span>
+        </div>
+      </div> -->
+
+      <div class="navbar-right">
+
+        <!-- Dropdown 1: Suínos -->
+        <div class="dropdown" data-bs-theme="light" >
+          <div class="dropdown-toggle" data-bs-toggle="dropdown">
+            Suínos
+          </div>
+          <ul class="dropdown-menu">
+            <li (click)="paraFormCadastro()"><span>Cadastrar Suíno</span></li>
+            <li (click)="paraListaSuinos()"><span>Listar Suínos</span></li>
+          </ul>
+        </div>
+      
+        <!-- Dropdown 2: Peso -->
+        <div class="dropdown">
+          <div class="dropdown-toggle" data-bs-toggle="dropdown">
+            Peso
+          </div>
+          <ul class="dropdown-menu">
+            <li (click)="paraCadastroPeso()"><span>Cadastrar Peso</span></li>
+            <li (click)="paraEdicaoPeso()"><span>Editar Peso</span></li>
+          </ul>
+        </div>
+      
+        <!-- Dropdown 3: Atividade/Sessão -->
+        <div class="dropdown">
+          <div class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Atividade/Sessão
+          </div>
+
+          <ul class="dropdown-menu">
+            <li (click)="paraCadastroAtividade()"><span>Cadastrar Atividade</span></li>
+            <li (click)="paraCadastroSessao()"><span>Cadastrar Sessão</span></li>
+            <li (click)="paraListaSessoes()"><span>Listar Sessões</span></li>
+          </ul>
+        </div>
+        
       </div>
     </nav>
 </div>
