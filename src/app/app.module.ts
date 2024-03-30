@@ -36,6 +36,7 @@ import { CadastroAtividadeComponent } from './components/cadastro-atividade/cada
 import { CadastroSessaoComponent } from './components/cadastro-sessao/cadastro-sessao.component';
 import { ListaSessoesComponent } from './components/lista-sessoes/lista-sessoes.component';
 import { HomeComponent } from './components/home/home.component';
+import { RealizaSessaoComponent } from './components/realiza-sessao/realiza-sessao.component';
 
 const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -65,6 +66,7 @@ const routes: Routes = [
     CadastroSessaoComponent,
     ListaSessoesComponent,
     HomeComponent,
+    RealizaSessaoComponent,
   ],
   imports: [
     BrowserModule,
