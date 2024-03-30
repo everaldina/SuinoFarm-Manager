@@ -1,0 +1,65 @@
+h1 {
+    text-align: center;
+}
+
+.appointment-list {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.appointment-list section {
+    position: relative;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.appointment-list section h2 {
+    margin-top: 0;
+}
+
+.appointment-list section span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.appointment-list section button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.appointment-list section button:hover {
+    filter: brightness(85%);
+}
+
+.filtro {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btnGroup {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+}
+
+#deletar {
+    color: #dc3545;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+.container-flex {
+    display: flex;
+    align-items: flex-start;
+}

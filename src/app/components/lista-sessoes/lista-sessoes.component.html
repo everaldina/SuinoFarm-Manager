@@ -1,1 +1,44 @@
-<p>lista-sessoes works!</p>
+<div class="filtro">
+    <mat-form-field>
+      <mat-label>Filtro</mat-label>
+      <select matNativeControl required [(ngModel)]="valorFiltro">
+        <option value="data">Data</option>
+        <option value="status">Status</option>
+      </select>
+    </mat-form-field>
+  
+    <mat-form-field *ngIf="valorFiltro == 'status'">
+      <mat-label>Status</mat-label>
+      <select matNativeControl required [(ngModel)]="valorPesquisa">
+        <option value="agendado">Agendado</option>
+        <option value="realizado">Realizado</option>
+      </select>
+    </mat-form-field>
+  
+    <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'data'">
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="valorPesquisa">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-fab color="primary" aria-label="Pesquisar" (click)="filtrarListagem(valorFiltro)">
+        <mat-icon>search</mat-icon>
+    </button>
+    
+    <button *ngIf="valorPesquisa" mat-mini-fab color="warn" aria-label="Limpar" (click)="limparFiltro()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+<div class="appointment-list">
+    <section *ngFor="let sessao of listaFiltrada; let i = index" class="container-flex">
+      <div>
+        <div *ngIf="!sessao.status && verificarAtraso(sessao.data)" matBadgePosition="below after" matBadge="!" matBadgeColor="warn"></div>
+        <h2>{{sessao.data}}</h2>
+        <span>{{sessao.descricao}}</span>
+        <button *ngIf="!sessao.status">Finalizar Sessão</button>
+      </div>
+    </section>
+</div>
