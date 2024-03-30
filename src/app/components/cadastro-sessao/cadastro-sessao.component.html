@@ -1,1 +1,66 @@
-<p>cadastro-sessao works!</p>
+<form [formGroup]="formCadastro" (ngSubmit)="cadastrarSessao()">
+  <div class="row mx-auto">
+    <div class="col-6 sessao">
+      <h3>Sessao</h3>
+      <mat-form-field>
+        <mat-label>Descricao</mat-label>
+        <textarea matInput formControlName="descricao"></textarea>
+        <mat-error *ngIf="formCadastro.get('descricao')?.invalid"
+          >Descrição é obrigatória</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Data da sessão</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="data"
+          placeholder="Data da sessão"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <mat-error *ngIf="formCadastro.get('data')?.invalid"
+          >Data de sessão é obrigatória</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Selecione Atividades:</mat-label>
+        <mat-select formArrayName="atividades" multiple>
+          <mat-option
+            *ngFor="let atividade of listaAtividades"
+            [value]="atividade.id"
+            (click)="selectAtividade(atividade.id)"
+            >{{ atividade.descricao }}</mat-option
+          >
+        </mat-select>
+        <mat-error
+          *ngIf="formCadastro.get('atividades')?.errors?.['selecaoInvalida']"
+          >Selecione ao menos
+          {{ formCadastro.get('atividades')?.errors?.['selecaoInvalida'].value }}
+          atividade</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="col-6 suinos">
+      <div>
+        <h3>Suinos</h3>
+        <mat-checkbox (change)="checkAtividade($event.checked)">
+          Selecionar Todos
+        </mat-checkbox>
+      </div>
+      <div class="suinos-container">
+        <section class="row" formArrayName="porcos">
+          <mat-checkbox
+          class="col-4" *ngFor="let suino of suinosFiltrados"
+          [formControlName]="suino.id"
+          >{{ suino.brincoAnimal }}</mat-checkbox
+          >
+        </section>
+      </div>
+    </div>
+  </div>
+  <button type="submit">Cadastrar Sessão</button>
+</form>
