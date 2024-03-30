@@ -29,7 +29,6 @@ export class ListaSessoesComponent {
 
   filtrarData(data: Date){
     let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
-    // return this.listaSessoes.filter(sessao => sessao.data === data_pesquisa);
     return this.listaSessoes.filter(sessao => this.dataPipe.transform(sessao.data, 'yyyy-MM-dd') === data_pesquisa);
   }
 
@@ -55,7 +54,6 @@ export class ListaSessoesComponent {
 
     return data_sessao < data_atual;
   }
-
 
   limparFiltro(){
     this.listaFiltrada = this.listaSessoes;
