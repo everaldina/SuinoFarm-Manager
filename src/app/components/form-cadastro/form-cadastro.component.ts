@@ -13,8 +13,11 @@ export class FormCadastroComponent {
   formularioSuino: FormGroup;
   listaStatus: string[] = ['Ativo', 'Vendido', 'Morto'];
   listaSexos: string[] = ['M', 'F'];
+  today = new Date();
 
   constructor(private database: DatabaseService, private datePipe: DatePipe) {
+    this.today.setDate(this.today.getDate());
+    
     this.formularioSuino = new FormGroup({
       'brincoAnimal': new FormControl(null, [
           Validators.required,
