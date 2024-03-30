@@ -38,7 +38,7 @@
         <div *ngIf="!sessao.status && verificarAtraso(sessao.data)" matBadgePosition="below after" matBadge="!" matBadgeColor="warn"></div>
         <h2>{{sessao.data}}</h2>
         <span>{{sessao.descricao}}</span>
-        <button *ngIf="!sessao.status">Finalizar Sessão</button>
+        <button *ngIf="!sessao.status" (click)="finalizarSessao(sessao.id)">Finalizar Sessão</button>
       </div>
     </section>
 </div>

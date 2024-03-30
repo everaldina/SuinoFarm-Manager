@@ -59,4 +59,14 @@ export class ListaSessoesComponent {
     this.listaFiltrada = this.listaSessoes;
     this.valorPesquisa = '';
   }
+
+  finalizarSessao(id: string){
+    // this.dataBase.finalizarSessao(id);
+    this.listaSessoes = this.listaSessoes.map(sessao => {
+      if(sessao.id === id){
+        sessao.status = true;
+      }
+      return sessao;
+    });
+  }
 }
