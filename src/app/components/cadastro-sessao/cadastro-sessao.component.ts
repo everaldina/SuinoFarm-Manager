@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { Suino } from '../../models/suino';
 import { DatePipe } from '@angular/common';
+import { Sessao } from '../../models/sessao';
 
 @Component({
   selector: 'app-cadastro-sessao',
@@ -56,7 +57,8 @@ export class CadastroSessaoComponent implements OnInit{
       
       for (const key in suinos) {
         if (suinos.hasOwnProperty(key)) {
-          this.listaSuinos.push({ ...suinos[key], id: key });
+          if ('status' in suinos[key] && suinos[key].status === 'Ativo')
+            this.listaSuinos.push({ ...suinos[key], id: key });
         }
       }
       
@@ -88,7 +90,26 @@ export class CadastroSessaoComponent implements OnInit{
 
   cadastrarSessao(): void {
     if (this.formCadastro.valid) {
-      console.log(this.formCadastro.value);
+      let sessao: Sessao = {
+        id: '',
+        descricao: this.formCadastro.value.descricao,
+        data: this.formCadastro.value.data,
+        status: false
+      }
+
+      let idSuinos: string[] = [];
+      for (const key in this.formCadastro.value) {
+        if (key !== 'descricao' && key !== 'data' && key !== 'atividades') {
+          if (this.formCadastro.value[key]) {
+            idSuinos.push(key);
+          }
+
+        }
+      }
+
+      console.log(sessao);
+      console.log(idSuinos);
+      console.log(this.formCadastro.value.atividades);
     }
   }
 
@@ -111,9 +132,8 @@ export class CadastroSessaoComponent implements OnInit{
     return this.listaSuinos.filter(suino => suino.dataNascimento === data_pesquisa);
   }
 
-  filtrarDataSaida(data: Date){
-    let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
-    return this.listaSuinos.filter(suino => suino.dataSaida === data_pesquisa);
+  filtrarBrinco(brinco: string){
+    return this.listaSuinos.filter(suino => suino.brincoAnimal === brinco);
   }
 
   filtrarPai(brinco_pai: string){
@@ -128,12 +148,11 @@ export class CadastroSessaoComponent implements OnInit{
     return this.listaSuinos.filter(suino => suino.sexo === sexo);
   }
 
-  filtrarStatus(status: string){
-    return this.listaSuinos.filter(suino => suino.status === status);
-  }
-
   filtrarListagem(filtro: string){
     switch (filtro){
+      case 'brinco':
+        this.suinosFiltrados = this.filtrarBrinco(this.valorPesquisa.toString());
+        break;
       case 'brincoPai':
         this.suinosFiltrados = this.filtrarPai(this.valorPesquisa.toString());
         break;
@@ -146,17 +165,11 @@ export class CadastroSessaoComponent implements OnInit{
         this.suinosFiltrados = this.filtrarDataNascimento(this.valorPesquisa);
         break;
 
-      case 'dataSaida':
-        this.suinosFiltrados = this.filtrarDataSaida(this.valorPesquisa);
-        break;
 
       case 'sexo':
         this.suinosFiltrados = this.filtrarSexo(this.valorPesquisa);
         break;
 
-      case 'status':
-        this.suinosFiltrados = this.filtrarStatus(this.valorPesquisa);
-        break;
     }
   }
 
