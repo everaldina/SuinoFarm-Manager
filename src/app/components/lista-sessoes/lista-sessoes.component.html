@@ -1,18 +1,18 @@
 <div class="filtro">
     <mat-form-field>
       <mat-label>Filtro</mat-label>
-      <select matNativeControl required [(ngModel)]="valorFiltro">
-        <option value="data">Data</option>
-        <option value="status">Status</option>
-      </select>
+      <mat-select matNativeControl required [(ngModel)]="valorFiltro">
+        <mat-option value="data">Data</mat-option>
+        <mat-option value="status">Status</mat-option>
+      </mat-select>
     </mat-form-field>
   
     <mat-form-field *ngIf="valorFiltro == 'status'">
       <mat-label>Status</mat-label>
-      <select matNativeControl required [(ngModel)]="valorPesquisa">
-        <option value="agendado">Agendado</option>
-        <option value="realizado">Realizado</option>
-      </select>
+      <mat-select matNativeControl required [(ngModel)]="valorPesquisa">
+        <mat-option value="agendado">Agendado</mat-option>
+        <mat-option value="realizado">Realizado</mat-option>
+      </mat-select>
     </mat-form-field>
   
     <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'data'">
@@ -37,7 +37,9 @@
       <div>
         <div *ngIf="!sessao.status && verificarAtraso(sessao.data)" matBadgePosition="below after" matBadge="!" matBadgeColor="warn"></div>
         <h2>{{sessao.data}}</h2>
+        <br>
         <span>{{sessao.descricao}}</span>
+        <br>
         <button *ngIf="!sessao.status" (click)="finalizarSessao(sessao.id)">Finalizar Sessão</button>
       </div>
     </section>
