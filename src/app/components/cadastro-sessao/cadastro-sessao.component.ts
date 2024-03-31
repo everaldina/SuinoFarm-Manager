@@ -11,7 +11,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Suino } from '../../models/suino';
-import { ChangeDetectorRef } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro-sessao',
@@ -24,13 +24,22 @@ export class CadastroSessaoComponent implements OnInit{
   listaSuinos: Suino[] = [];
   suinosFiltrados: Suino[] = [];
   formCadastro: FormGroup = new FormGroup({});
-  suinos: FormGroup = new FormGroup({});
+  valorFiltro: string = '';
+  valorPesquisa: any = '';
+
 
   constructor(
     private database: DatabaseService,
     private formBuilder: FormBuilder,
-    private cdRef: ChangeDetectorRef
+    private dataPipe: DatePipe,
   ) {
+    this.formCadastro = this.formBuilder.group({
+      descricao: ['', Validators.required],
+      data: ['', Validators.required],
+      atividades: this.formBuilder.array([], {
+        validators: this.minimoSelecionado(),
+      })
+    });
   }
 
   ngOnInit() {
@@ -52,39 +61,22 @@ export class CadastroSessaoComponent implements OnInit{
       }
       
       this.suinosFiltrados = this.listaSuinos;
-      
-      const formControls: { [key: string]: FormControl<boolean | null> } = {};
+
       this.listaSuinos.forEach((suino) => {
-        formControls[suino.id] = this.formBuilder.control(false);
+        this.formCadastro.addControl(suino.id, this.formBuilder.control(false));
       });
-      
-      this.suinos = this.formBuilder.group(formControls);
     });
 
-    this.formCadastro = this.formBuilder.group({
-      descricao: ['', Validators.required],
-      data: ['', Validators.required],
-      atividades: this.formBuilder.array([], {
-        validators: this.minimoSelecionado(),
-      }),
-      suinos: this.suinos
-    });
-
-  }
-
-  updateFormValue(checked: boolean, controlId: string) {
-    this.suinos.controls[controlId].setValue(checked);
   }
   
   checkAtividade(marcado: boolean) {
     this.suinosFiltrados.forEach((suino) => {
       let id = suino.id;
       console.log(id);
-      this.suinos.get(id)?.patchValue(marcado);
+      this.formCadastro.get(id)?.setValue(marcado);
     });
-    console.log(this.suinos.value);
-    this.cdRef.detectChanges();
   }
+
   minimoSelecionado(minimo: number = 1): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       if (control.value.length < minimo) {
@@ -112,6 +104,65 @@ export class CadastroSessaoComponent implements OnInit{
     } else {
       atividadesArray.push(this.formBuilder.control(idAtividade));
     }
+  }
+
+  filtrarDataNascimento(data: Date){
+    let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
+    return this.listaSuinos.filter(suino => suino.dataNascimento === data_pesquisa);
+  }
+
+  filtrarDataSaida(data: Date){
+    let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
+    return this.listaSuinos.filter(suino => suino.dataSaida === data_pesquisa);
+  }
+
+  filtrarPai(brinco_pai: string){
+    return this.listaSuinos.filter(suino => suino.brincoPai === brinco_pai);
+  }
+
+  filtrarMae(brinco_mae: string){
+    return this.listaSuinos.filter(suino => suino.brincoMae === brinco_mae);
+  }
+
+  filtrarSexo(sexo: string){
+    return this.listaSuinos.filter(suino => suino.sexo === sexo);
+  }
+
+  filtrarStatus(status: string){
+    return this.listaSuinos.filter(suino => suino.status === status);
+  }
+
+  filtrarListagem(filtro: string){
+    switch (filtro){
+      case 'brincoPai':
+        this.suinosFiltrados = this.filtrarPai(this.valorPesquisa.toString());
+        break;
+
+      case 'brincoMae':
+        this.suinosFiltrados = this.filtrarMae(this.valorPesquisa.toString());
+        break;
+
+      case 'dataNascimento':
+        this.suinosFiltrados = this.filtrarDataNascimento(this.valorPesquisa);
+        break;
+
+      case 'dataSaida':
+        this.suinosFiltrados = this.filtrarDataSaida(this.valorPesquisa);
+        break;
+
+      case 'sexo':
+        this.suinosFiltrados = this.filtrarSexo(this.valorPesquisa);
+        break;
+
+      case 'status':
+        this.suinosFiltrados = this.filtrarStatus(this.valorPesquisa);
+        break;
+    }
+  }
+
+  limparFiltro(){
+    this.suinosFiltrados = this.listaSuinos;
+    this.valorPesquisa = '';
   }
 
 }
