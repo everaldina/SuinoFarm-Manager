@@ -5,44 +5,24 @@
       <mat-form-field>
         <mat-label>Descricao</mat-label>
         <textarea matInput formControlName="descricao"></textarea>
-        <mat-error *ngIf="formCadastro.get('descricao')?.invalid"
-          >Descrição é obrigatória</mat-error
-        >
+        <mat-error *ngIf="formCadastro.get('descricao')?.invalid">Descrição é obrigatória</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Data da sessão</mat-label>
-        <input
-          matInput
-          [min]="minDate"
-          [matDatepicker]="picker1"
-          formControlName="data"
-          placeholder="Data da sessão"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
+        <input matInput [min]="minDate" [matDatepicker]="picker1" formControlName="data" placeholder="Data da sessão" />
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
-        <mat-error *ngIf="formCadastro.get('data')?.invalid"
-          >Data de sessão é obrigatória</mat-error
-        >
+        <mat-error *ngIf="formCadastro.get('data')?.invalid">Data de sessão é obrigatória</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Selecione Atividades:</mat-label>
         <mat-select formArrayName="atividades" multiple>
-          <mat-option
-            *ngFor="let atividade of listaAtividades"
-            [value]="atividade.id"
-            (click)="selectAtividade(atividade.id)"
-            >{{ atividade.descricao }}</mat-option
-          >
+          <mat-option *ngFor="let atividade of listaAtividades" [value]="atividade.id"
+            (click)="selectAtividade(atividade.id)">{{ atividade.descricao }}</mat-option>
         </mat-select>
-        <mat-error
-          *ngIf="formCadastro.get('atividades')?.errors?.['selecaoInvalida']"
-          >Selecione ao menos
+        <mat-error *ngIf="formCadastro.get('atividades')?.errors?.['selecaoInvalida']">Selecione ao menos
           {{ formCadastro.get('atividades')?.errors?.['selecaoInvalida'].value }}
-          atividade</mat-error
-        >
+          atividade</mat-error>
       </mat-form-field>
     </div>
     <div class="col-6 suinos">
@@ -54,11 +34,8 @@
       </div>
       <div class="suinos-container">
         <section class="row">
-          <mat-checkbox
-          class="col-4" *ngFor="let suino of suinosFiltrados"
-          formControlName="{{suino.id}}"
-          >{{ suino.brincoAnimal }}</mat-checkbox
-          >
+          <mat-checkbox class="col-4" *ngFor="let suino of suinosFiltrados" formControlName="{{suino.id}}">{{
+            suino.brincoAnimal }}</mat-checkbox>
         </section>
       </div>
     </div>
@@ -69,24 +46,24 @@
 <div class="filter-container">
   <mat-form-field>
     <mat-label>Filtro</mat-label>
-    <select matNativeControl required [(ngModel)]="valorFiltro">
-      <option value="brinco">Brinco do Animal</option>
-      <option value="brincoPai">Brinco do pai</option>
-      <option value="brincoMae">Brinco da mãe</option>
-      <option value="dataNascimento">Data de nascimento</option>
-      <option value="sexo">Sexo</option>
-    </select>
+    <mat-select matNativeControl required [(ngModel)]="valorFiltro">
+      <mat-option value="brinco">Brinco do Animal</mat-option>
+      <mat-option value="brincoPai">Brinco do pai</mat-option>
+      <mat-option value="brincoMae">Brinco da mãe</mat-option>
+      <mat-option value="dataNascimento">Data de nascimento</mat-option>
+      <mat-option value="sexo">Sexo</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field *ngIf="valorFiltro == 'sexo'">
     <mat-label>Sexo</mat-label>
-    <select matNativeControl required [(ngModel)]="valorPesquisa">
-      <option value="M">Masculino</option>
-      <option value="F">Feminino</option>
-    </select>
+    <mat-select matNativeControl required [(ngModel)]="valorPesquisa">
+      <mat-option value="M">Masculino</mat-option>
+      <mat-option value="F">Feminino</mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'brin' || !valorFiltro" >
+  <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'brin' || !valorFiltro">
     <mat-label>Brinco</mat-label>
     <input type="number" matInput placeholder="Valor" [(ngModel)]="valorPesquisa">
   </mat-form-field>
