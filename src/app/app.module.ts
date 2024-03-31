@@ -19,7 +19,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -82,6 +83,7 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatCheckboxModule,
     MatBadgeModule
   ],
   providers: [

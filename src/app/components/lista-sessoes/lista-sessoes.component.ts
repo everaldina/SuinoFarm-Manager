@@ -61,7 +61,6 @@ export class ListaSessoesComponent {
   }
 
   finalizarSessao(id: string){
-    // this.dataBase.finalizarSessao(id);
     this.listaSessoes = this.listaSessoes.map(sessao => {
       if(sessao.id === id){
         sessao.status = true;
