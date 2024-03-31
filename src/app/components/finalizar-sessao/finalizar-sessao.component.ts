@@ -5,9 +5,17 @@ import { DatabaseService } from '../../services/database.service';
 import { ActivatedRoute } from '@angular/router';
 import { Atividade } from '../../models/atividade';
 import { Suino } from '../../models/suino';
-import { FormGroup } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  ValidatorFn,
+  AbstractControl,
+  FormControl,
+} from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-finalizar-sessao',
@@ -29,7 +37,7 @@ export class FinalizarSessaoComponent implements OnInit {
   minDate = new Date();
 
   constructor(private databaseService: DatabaseService, private route: ActivatedRoute, private formBuilder: FormBuilder, private dataPipe: DatePipe) {
-
+    this.formSuinos = this.formBuilder.group({});
   }
 
   ngOnInit(): void {
@@ -42,79 +50,75 @@ export class FinalizarSessaoComponent implements OnInit {
     this.databaseService.getAtividadesSessao(this.id).subscribe((response) => {
       for (const key in response) {
         if (response.hasOwnProperty(key)) {
-          this.atividadesSessao.push({ ...response[key], id: key });
+          this.atividadesSessao.push({ ...response[key], id: response[key].id });
         }
       }
 
-      this.databaseService.getAtividades().subscribe((response) => {
-        for (const key in response) {
-          if (response.hasOwnProperty(key)) {
-            if (this.atividadesSessao.some(atividade => atividade.id === response[key].id)) {
-              this.atividades.push({ ...response[key], id: key });
-            }
-          }
-        }
-      });
+      for (const atividade of this.atividadesSessao) {
+        this.databaseService.getAtividade(atividade.id).subscribe((response: Atividade) => {
+          this.atividades.push(response);
+        });
+      }
     });
+
 
     this.databaseService.getSuinosSessao(this.id).subscribe((response) => {
       for (const key in response) {
         if (response.hasOwnProperty(key)) {
-          this.suinos.push({ ...response[key], id: key });
+          this.suinos.push({ ...response[key], id: response[key].id });
         }
       }
 
-      this.databaseService.getSuinos().subscribe((response) => {
-        for (const key in response) {
-          if (response.hasOwnProperty(key)) {
-            if (this.suinos.some(suino => suino.id === key)) {
-              this.listaSuinos.push({ ...response[key], id: key });
-            }
-          }
-        }
-      });
+      const requests = this.suinos.map(suino =>
+        this.databaseService.getSuino(suino.id)
+      );
 
-      // this.listaSuinos = this.suinos;
+      forkJoin(requests).subscribe((suinoResponses: Suino[]) => {
+        this.listaSuinos = suinoResponses.map((response, index) => ({
+          ...response,
+          id: this.suinos[index].id
+        }));
 
-      this.suinosFiltrados = this.listaSuinos;
+        this.suinosFiltrados = this.listaSuinos;
 
-      this.listaSuinos.forEach((suino) => {
-        this.formSuinos.addControl(suino.id, this.formBuilder.control(false));
+        this.listaSuinos.forEach((suino) => {
+          this.formSuinos.addControl(suino.id, this.formBuilder.control(true));
+        });
       });
     });
   }
 
-
   checkAtividade(marcado: boolean) {
+    console.log(this.suinosFiltrados);
     this.suinosFiltrados.forEach((suino) => {
       let id = suino.id;
       this.formSuinos.get(id)?.setValue(marcado);
     });
   }
 
-  filtrarDataNascimento(data: Date){
+  filtrarDataNascimento(data: Date) {
     let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
     return this.listaSuinos.filter(suino => suino.dataNascimento === data_pesquisa);
   }
 
-  filtrarBrinco(brinco: string){
+  filtrarBrinco(brinco: string) {
     return this.listaSuinos.filter(suino => suino.brincoAnimal === brinco);
   }
 
-  filtrarPai(brinco_pai: string){
+  filtrarPai(brinco_pai: string) {
     return this.listaSuinos.filter(suino => suino.brincoPai === brinco_pai);
   }
 
-  filtrarMae(brinco_mae: string){
+  filtrarMae(brinco_mae: string) {
     return this.listaSuinos.filter(suino => suino.brincoMae === brinco_mae);
   }
 
-  filtrarSexo(sexo: string){
+  filtrarSexo(sexo: string) {
     return this.listaSuinos.filter(suino => suino.sexo === sexo);
   }
 
-  filtrarListagem(filtro: string){
-    switch (filtro){
+  filtrarListagem(filtro: string) {
+    switch (filtro) {
       case 'brinco':
         this.suinosFiltrados = this.filtrarBrinco(this.valorPesquisa.toString());
         break;
@@ -130,11 +134,13 @@ export class FinalizarSessaoComponent implements OnInit {
         this.suinosFiltrados = this.filtrarDataNascimento(this.valorPesquisa);
         break;
 
-
       case 'sexo':
         this.suinosFiltrados = this.filtrarSexo(this.valorPesquisa);
         break;
 
+      case '':
+        this.suinosFiltrados = this.listaSuinos;
+        break;
     }
   }
 
@@ -143,15 +149,16 @@ export class FinalizarSessaoComponent implements OnInit {
     this.valorPesquisa = '';
   }
 
-  nextStep(): void {
-    this.limparFiltro();
-
-    let suinosSelecionados = this.suinosFiltrados.filter(suino => this.formSuinos.get(suino.id)?.value);
-    let atividadesSelecionadas = this.atividades.filter(atividade => this.formSuinos.get(atividade.id)?.value);
+  nextStep(atividade: Atividade): void {
+    if(this.sessao){
+      for(const suino of this.listaSuinos){
+        this.databaseService.mudarStatusAtividade(this.sessao.id, atividade.id, suino.id, this.formSuinos.get(suino.id)?.value);
+      }
+    }
 
   }
 
   finalizarSessao(): void {
-    // this.databaseService.finalizarSessao(this.id);
+    this.databaseService.mudarStatusSessao(this.id, true);
   }
 }

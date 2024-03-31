@@ -7,9 +7,12 @@
 
     <br>
 
-    <mat-vertical-stepper [linear]="false" #stepper>
-        <mat-step *ngFor="let atividade of atividades" [label]="atividade.descricao">
+    <mat-vertical-stepper [linear]="true" #stepper>
+        <mat-step *ngFor="let atividade of atividades" [editable]="false" [label]="atividade.descricao">
             <br>
+            <h5>Suinos da Sessão</h5>
+
+            <p>Selecione todos os suinos que participaram da sessão.</p>
 
             <div class="filter-container">
                 <mat-form-field>
@@ -54,11 +57,10 @@
             </div>
 
 
-
             <form [formGroup]="formSuinos">
                 <div class="col-6 suinos">
                     <div>
-                        <mat-checkbox (change)="checkAtividade($event.checked)">
+                        <mat-checkbox checked="true" (change)="checkAtividade($event.checked)">
                             Selecionar Todos
                         </mat-checkbox>
                     </div>
@@ -74,7 +76,7 @@
 
             <br>
 
-            <button mat-raised-button matStepperNext (click)="nextStep()">Próximo</button>
+            <button mat-raised-button matStepperNext (click)="nextStep(atividade)">Próximo</button>
         </mat-step>
 
         <mat-step>

@@ -390,6 +390,17 @@ export class DatabaseService {
     ).subscribe();
   }
 
+  mudarStatusSessao(idSessao: string, status: boolean) {
+    this.http.get(this.endpoint + `/sessoes/${idSessao}.json`).pipe(
+      retry(2),
+      catchError(this.handleError),
+      map((response: any) => {
+        response.status = status;
+        this.http.put(this.endpoint + `/sessoes/${idSessao}.json`, response).subscribe();
+      })
+    ).subscribe();
+  }
+
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
