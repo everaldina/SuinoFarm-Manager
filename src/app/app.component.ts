@@ -23,7 +23,7 @@ export class AppComponent {
   }
 
   paraFormCadastro() {
-    this.rotas.navigate(['formCadastro']);
+    this.rotas.navigate(['cadastroSuino']);
   }
 
   paraListaSuinos() {

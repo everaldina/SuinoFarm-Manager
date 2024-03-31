@@ -24,7 +24,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
-import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
+import { CadastroSuinoComponent } from './components/cadastro-suino/cadastro-suino.component';
 import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
 import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.component';
 import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
@@ -39,10 +39,10 @@ import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: AuthComponent },
-  { path: 'formCadastro', component: FormCadastroComponent, canActivate: [AuthGuard] },
+  { path: 'cadastroSuino', component: CadastroSuinoComponent, canActivate: [AuthGuard] },
+  { path: 'listaSuinos', component: ListaSuinosComponent, canActivate: [AuthGuard] },
   { path: 'cadastroPeso', component: CadastroPesoComponent, canActivate: [AuthGuard] },
   { path: 'edicaoPeso', component: EdicaoPesoComponent, canActivate: [AuthGuard] },
-  { path: 'listaSuinos', component: ListaSuinosComponent, canActivate: [AuthGuard] },
   { path: 'graficoPeso/:id', component: GraficoPesoComponent, canActivate: [AuthGuard] },
   { path: 'cadastroAtividade', component: CadastroAtividadeComponent, canActivate: [AuthGuard] },
   { path: 'cadastroSessao', component: CadastroSessaoComponent, canActivate: [AuthGuard] },
@@ -53,7 +53,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    FormCadastroComponent,
+    CadastroSuinoComponent,
     ListaSuinosComponent,
     GraficoPesoComponent,
     CadastroPesoComponent,

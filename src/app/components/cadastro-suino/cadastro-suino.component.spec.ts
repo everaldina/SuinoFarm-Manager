@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormCadastroComponent } from './form-cadastro.component';
+import { CadastroSuinoComponent } from './cadastro-suino.component';
 
-describe('FormCadastroComponent', () => {
-  let component: FormCadastroComponent;
-  let fixture: ComponentFixture<FormCadastroComponent>;
+describe('CadastroSuinoComponent', () => {
+  let component: CadastroSuinoComponent;
+  let fixture: ComponentFixture<CadastroSuinoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormCadastroComponent]
+      declarations: [CadastroSuinoComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FormCadastroComponent);
+    fixture = TestBed.createComponent(CadastroSuinoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

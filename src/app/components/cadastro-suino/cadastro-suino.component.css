@@ -1,3 +1,8 @@
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 .suino-form mat-form-field {
     display: block;
     width: 30%; /* Adjust this to change the width of the form */
