@@ -1,5 +1,6 @@
 export interface Sessao {
   id: string;
-  data: string;
+  data: Date;
   descricao: string;
+  status: boolean;
 }
