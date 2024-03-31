@@ -52,6 +52,9 @@
     <section *ngFor="let suino of listaFiltrada; let i = index" class="container-flex">
       <div>
         <h2> {{ suino.brincoAnimal}} </h2>
+
+        <br>
+
         <span> Data de Nascimento: {{ suino.dataNascimento }} </span>
         <br>
         <span> Status: {{ suino.status }} </span>
@@ -66,6 +69,8 @@
             <br>
             <span> Data de saída: {{ suino.dataSaida }} </span>
         </div>
+
+        <br>
 
         <button (click)="expandirAnimal(i)">
             {{ animalExpandidoIndex === i ? 'Recolher Detalhes' : 'Expandir Detalhes' }}
