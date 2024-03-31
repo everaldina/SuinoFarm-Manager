@@ -9,12 +9,76 @@
 
     <mat-vertical-stepper [linear]="false" #stepper>
         <mat-step *ngFor="let atividade of atividades" [label]="atividade.descricao">
-            
+            <br>
 
-            <button mat-raised-button matStepperNext>Próximo</button>
+            <div class="filter-container">
+                <mat-form-field>
+                    <mat-label>Filtro</mat-label>
+                    <mat-select matNativeControl required [(ngModel)]="valorFiltro">
+                        <mat-option value="brinco">Brinco do Animal</mat-option>
+                        <mat-option value="brincoPai">Brinco do pai</mat-option>
+                        <mat-option value="brincoMae">Brinco da mãe</mat-option>
+                        <mat-option value="dataNascimento">Data de nascimento</mat-option>
+                        <mat-option value="sexo">Sexo</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="valorFiltro == 'sexo'">
+                    <mat-label>Sexo</mat-label>
+                    <mat-select matNativeControl required [(ngModel)]="valorPesquisa">
+                        <mat-option value="M">Masculino</mat-option>
+                        <mat-option value="F">Feminino</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'brin' || !valorFiltro">
+                    <mat-label>Brinco</mat-label>
+                    <input type="number" matInput placeholder="Valor" [(ngModel)]="valorPesquisa">
+                </mat-form-field>
+
+                <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'data'">
+                    <mat-label>Data</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="valorPesquisa">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+                </mat-form-field>
+
+                <button mat-fab color="primary" aria-label="Pesquisar" (click)="filtrarListagem(valorFiltro)">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button mat-mini-fab color="warn" aria-label="Limpar">
+                    <mat-icon (click)="limparFiltro()">clear</mat-icon>
+                </button>
+            </div>
+
+
+
+            <form [formGroup]="formSuinos">
+                <div class="col-6 suinos">
+                    <div>
+                        <mat-checkbox (change)="checkAtividade($event.checked)">
+                            Selecionar Todos
+                        </mat-checkbox>
+                    </div>
+                    <div class="suinos-container">
+                        <section class="row">
+                            <mat-checkbox class="col-4" *ngFor="let suino of suinosFiltrados"
+                                formControlName="{{suino.id}}">{{
+                                suino.brincoAnimal }}</mat-checkbox>
+                        </section>
+                    </div>
+                </div>
+            </form>
+
+            <br>
+
+            <button mat-raised-button matStepperNext (click)="nextStep()">Próximo</button>
         </mat-step>
 
         <mat-step>
+            <ng-template matStepLabel>Finalizar</ng-template>
             <p>Finalizar sessão</p>
             <button mat-raised-button (click)="finalizarSessao()">Finalizar</button>
         </mat-step>
@@ -22,5 +86,5 @@
 </div>
 
 <div *ngIf="!sessao">
-    <mat-spinner></mat-spinner>  
+    <mat-spinner></mat-spinner>
 </div>
