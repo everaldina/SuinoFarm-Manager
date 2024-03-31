@@ -61,11 +61,6 @@ export class ListaSessoesComponent {
   }
 
   finalizarSessao(id: string){
-    this.listaSessoes = this.listaSessoes.map(sessao => {
-      if(sessao.id === id){
-        sessao.status = true;
-      }
-      return sessao;
-    });
+    this.router.navigate(['/finalizarSessao', id]);
   }
 }
