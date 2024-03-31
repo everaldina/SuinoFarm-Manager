@@ -21,6 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -87,7 +89,9 @@ const routes: Routes = [
     MatIconModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatStepperModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
