@@ -1,7 +1,7 @@
 <form [formGroup]="formCadastro" (ngSubmit)="cadastrarSessao()">
   <div class="row mx-auto">
     <div class="col-6 sessao">
-      <h3>Sessao</h3>
+      <h3>Sessão</h3>
       <mat-form-field>
         <mat-label>Descricao</mat-label>
         <textarea matInput formControlName="descricao"></textarea>
@@ -13,6 +13,7 @@
         <mat-label>Data da sessão</mat-label>
         <input
           matInput
+          [min]="minDate"
           [matDatepicker]="picker1"
           formControlName="data"
           placeholder="Data da sessão"
@@ -62,8 +63,9 @@
       </div>
     </div>
   </div>
-  <button type="submit">Cadastrar Sessão</button>
+  <button mat-raised-button color="primary" type="submit">Cadastrar Sessão</button>
 </form>
+
 <div class="filter-container">
   <mat-form-field>
     <mat-label>Filtro</mat-label>
@@ -101,7 +103,7 @@
   <button mat-fab color="primary" aria-label="Pesquisar" (click)="filtrarListagem(valorFiltro)">
     <mat-icon>search</mat-icon>
   </button>
-  <button>
+  <button mat-mini-fab color="warn" aria-label="Limpar">
     <mat-icon (click)="limparFiltro()">clear</mat-icon>
   </button>
 </div>

@@ -27,7 +27,7 @@ export class CadastroSessaoComponent implements OnInit{
   formCadastro: FormGroup = new FormGroup({});
   valorFiltro: string = '';
   valorPesquisa: any = '';
-
+  minDate = new Date();
 
   constructor(
     private database: DatabaseService,
@@ -74,7 +74,6 @@ export class CadastroSessaoComponent implements OnInit{
   checkAtividade(marcado: boolean) {
     this.suinosFiltrados.forEach((suino) => {
       let id = suino.id;
-      console.log(id);
       this.formCadastro.get(id)?.setValue(marcado);
     });
   }
@@ -90,10 +89,14 @@ export class CadastroSessaoComponent implements OnInit{
 
   cadastrarSessao(): void {
     if (this.formCadastro.valid) {
+      let data = this.formCadastro.value.data;
+
+      data = this.dataPipe.transform(data, 'yyyy-MM-dd') ?? '';
+
       let sessao: Sessao = {
         id: '',
         descricao: this.formCadastro.value.descricao,
-        data: this.formCadastro.value.data,
+        data: data,
         status: false
       }
 
@@ -107,9 +110,7 @@ export class CadastroSessaoComponent implements OnInit{
         }
       }
 
-      console.log(sessao);
-      console.log(idSuinos);
-      console.log(this.formCadastro.value.atividades);
+      this.database.addSessao(sessao, this.formCadastro.value.atividades, idSuinos);
     }
   }
 
