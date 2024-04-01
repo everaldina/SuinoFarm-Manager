@@ -8,14 +8,10 @@ import { Suino } from '../../models/suino';
 import {
   FormGroup,
   FormBuilder,
-  Validators,
-  FormArray,
-  ValidatorFn,
-  AbstractControl,
-  FormControl,
 } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-finalizar-sessao',
@@ -36,7 +32,7 @@ export class FinalizarSessaoComponent implements OnInit {
   valorPesquisa: any = '';
   minDate = new Date();
 
-  constructor(private databaseService: DatabaseService, private route: ActivatedRoute, private formBuilder: FormBuilder, private dataPipe: DatePipe) {
+  constructor(private databaseService: DatabaseService, private route: ActivatedRoute, private formBuilder: FormBuilder, private dataPipe: DatePipe, private router: Router) {
     this.formSuinos = this.formBuilder.group({});
   }
 
@@ -45,6 +41,7 @@ export class FinalizarSessaoComponent implements OnInit {
 
     this.databaseService.getSessao(this.id).subscribe((response: Sessao) => {
       this.sessao = response;
+      this.sessao.id = this.id;
     });
 
     this.databaseService.getAtividadesSessao(this.id).subscribe((response) => {
@@ -56,6 +53,7 @@ export class FinalizarSessaoComponent implements OnInit {
 
       for (const atividade of this.atividadesSessao) {
         this.databaseService.getAtividade(atividade.id).subscribe((response: Atividade) => {
+          response.id = atividade.id;
           this.atividades.push(response);
         });
       }
@@ -89,7 +87,6 @@ export class FinalizarSessaoComponent implements OnInit {
   }
 
   checkAtividade(marcado: boolean) {
-    console.log(this.suinosFiltrados);
     this.suinosFiltrados.forEach((suino) => {
       let id = suino.id;
       this.formSuinos.get(id)?.setValue(marcado);
@@ -155,10 +152,13 @@ export class FinalizarSessaoComponent implements OnInit {
         this.databaseService.mudarStatusAtividade(this.sessao.id, atividade.id, suino.id, this.formSuinos.get(suino.id)?.value);
       }
     }
-
   }
 
   finalizarSessao(): void {
     this.databaseService.mudarStatusSessao(this.id, true);
+
+    alert('Sessão finalizada com sucesso!');
+
+    this.router.navigate(['/listaSessoes']);
   }
 }

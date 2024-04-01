@@ -42,7 +42,12 @@
         <br>
         <span>{{sessao.descricao}}</span>
         <br>
-        <button *ngIf="!sessao.status" (click)="finalizarSessao(sessao.id)">Finalizar Sessão</button>
+        <span>Status: {{sessao.status ? 'Realizado' : 'Agendado'}}</span>
+        <br *ngIf="!sessao.status">
+        <div>
+          <!-- <button mat-raised-button color="accent" >Visualizar Sessão</button> -->
+          <button mat-raised-button color="primary" *ngIf="!sessao.status" (click)="finalizarSessao(sessao.id)">Finalizar Sessão</button>
+        </div>
       </div>
     </section>
 </div>

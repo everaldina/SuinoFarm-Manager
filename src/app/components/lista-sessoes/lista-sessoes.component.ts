@@ -52,6 +52,8 @@ export class ListaSessoesComponent {
     let data_sessao = new Date(data);
     let data_atual = new Date();
 
+    data_atual.setDate(data_atual.getDate() - 1);
+
     return data_sessao < data_atual;
   }
 

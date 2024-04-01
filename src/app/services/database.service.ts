@@ -378,11 +378,13 @@ export class DatabaseService {
       retry(2),
       catchError(this.handleError),
       map((response: any) => {
+        console.log(response);
         const keys = Object.keys(response);
         for (const key of keys) {
           const atividade = response[key];
           if (atividade.hasOwnProperty("id") && atividade["id"] === idAtividade) {
             atividade[idSuino] = status;
+            console.log(atividade);
             this.http.put(this.endpoint + `/sessoes/${idSessao}/atividades/${key}.json`, atividade).subscribe();
           }
         }

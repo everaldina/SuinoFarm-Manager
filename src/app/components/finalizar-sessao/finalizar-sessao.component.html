@@ -9,10 +9,26 @@
 
     <mat-vertical-stepper [linear]="true" #stepper>
         <mat-step *ngFor="let atividade of atividades" [editable]="false" [label]="atividade.descricao">
-            <br>
-            <h5>Suinos da Sessão</h5>
+            <p>Selecione todos os suinos que participaram da sessão:</p>
 
-            <p>Selecione todos os suinos que participaram da sessão.</p>
+            <form [formGroup]="formSuinos">
+                <div class="col-6 suinos">
+                    <div>
+                        <mat-checkbox checked="true" (change)="checkAtividade($event.checked)">
+                            Selecionar Todos
+                        </mat-checkbox>
+                    </div>
+                    <div class="suinos-container">
+                        <section class="row">
+                            <mat-checkbox class="col-4" *ngFor="let suino of suinosFiltrados"
+                                formControlName="{{suino.id}}">{{
+                                suino.brincoAnimal }}</mat-checkbox>
+                        </section>
+                    </div>
+                </div>
+            </form>
+
+            <br>
 
             <div class="filter-container">
                 <mat-form-field>
@@ -56,24 +72,6 @@
                 </button>
             </div>
 
-
-            <form [formGroup]="formSuinos">
-                <div class="col-6 suinos">
-                    <div>
-                        <mat-checkbox checked="true" (change)="checkAtividade($event.checked)">
-                            Selecionar Todos
-                        </mat-checkbox>
-                    </div>
-                    <div class="suinos-container">
-                        <section class="row">
-                            <mat-checkbox class="col-4" *ngFor="let suino of suinosFiltrados"
-                                formControlName="{{suino.id}}">{{
-                                suino.brincoAnimal }}</mat-checkbox>
-                        </section>
-                    </div>
-                </div>
-            </form>
-
             <br>
 
             <button mat-raised-button matStepperNext (click)="nextStep(atividade)">Próximo</button>
@@ -82,7 +80,7 @@
         <mat-step>
             <ng-template matStepLabel>Finalizar</ng-template>
             <p>Finalizar sessão</p>
-            <button mat-raised-button (click)="finalizarSessao()">Finalizar</button>
+            <button mat-raised-button color="primary" (click)="finalizarSessao()">Finalizar</button>
         </mat-step>
     </mat-vertical-stepper>
 </div>
