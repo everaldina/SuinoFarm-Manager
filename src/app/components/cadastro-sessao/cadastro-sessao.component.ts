@@ -88,9 +88,28 @@ export class CadastroSessaoComponent implements OnInit{
   }
 
   cadastrarSessao(): void {
-    if (this.formCadastro.valid) {
+    if (this.formCadastro.invalid){
+      if (this.formCadastro.get('atividades')?.hasError('selecaoInvalida')){
+        alert('Selecione ao menos uma atividade');
+      }
+    } else {
+      let idSuinos: string[] = [];
+      let suinoSelecionado = false;
+      for (const key in this.formCadastro.value) {
+        if (key !== 'descricao' && key !== 'data' && key !== 'atividades') {
+          suinoSelecionado = suinoSelecionado || this.formCadastro.value[key];
+          if (this.formCadastro.value[key]) {
+            idSuinos.push(key);
+          }
+          
+        }
+      }
+      if (!suinoSelecionado){
+        alert('Selecione ao menos um suíno');
+        return;
+      }
+      
       let data = this.formCadastro.value.data;
-
       data = this.dataPipe.transform(data, 'yyyy-MM-dd') ?? '';
 
       let sessao: Sessao = {
@@ -100,15 +119,6 @@ export class CadastroSessaoComponent implements OnInit{
         status: false
       }
 
-      let idSuinos: string[] = [];
-      for (const key in this.formCadastro.value) {
-        if (key !== 'descricao' && key !== 'data' && key !== 'atividades') {
-          if (this.formCadastro.value[key]) {
-            idSuinos.push(key);
-          }
-
-        }
-      }
 
       this.database.addSessao(sessao, this.formCadastro.value.atividades, idSuinos);
     }

@@ -50,14 +50,15 @@
               >
             </mat-select>
             <mat-error
-              *ngIf="formCadastro.get('atividades')?.errors?.['selecaoInvalida']"
-              >Selecione ao menos
-              {{ formCadastro.get('atividades')?.errors?.['selecaoInvalida'].value }}
-              atividade</mat-error
+              *ngIf="
+                formCadastro.get('atividades')?.hasError('selecaoInvalida')
+              "
+              >Selecione ao menos uma atividade</mat-error
             >
+
           </mat-form-field>
         </div>
-        <div class="row  w-50 mt-3 mx-auto">
+        <div class="row w-50 mt-3 mx-auto">
           <button mat-raised-button color="primary" type="submit">
             Cadastrar Sessão
           </button>
@@ -78,7 +79,7 @@
       <div class="suinos-container container">
         <section class="row">
           <mat-checkbox
-            class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 "
+            class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
             *ngFor="let suino of suinosFiltrados"
             formControlName="{{ suino.id }}"
             >{{ suino.brincoAnimal }}</mat-checkbox
@@ -91,57 +92,76 @@
 
 <div class="filter-container d-flex justify-content-end">
   <div class="col-6">
-        <div class="d-flex align-items-center justify-content-center ">
-              <mat-form-field  subscriptSizing="dynamic" class="m-2">
-                <mat-label>Filtro</mat-label>
-                <mat-select matNativeControl required [(ngModel)]="valorFiltro">
-                  <mat-option value="brinco">Brinco do Animal</mat-option>
-                  <mat-option value="brincoPai">Brinco do pai</mat-option>
-                  <mat-option value="brincoMae">Brinco da mãe</mat-option>
-                  <mat-option value="dataNascimento">Data de nascimento</mat-option>
-                  <mat-option value="sexo">Sexo</mat-option>
-                </mat-select>
-              </mat-form-field>
-              
-              <mat-form-field subscriptSizing="dynamic" *ngIf="valorFiltro == 'sexo'" class="m-2">
-                <mat-label>Sexo</mat-label>
-                <mat-select matNativeControl required [(ngModel)]="valorPesquisa">
-                  <mat-option value="M">Masculino</mat-option>
-                  <mat-option value="F">Feminino</mat-option>
-                </mat-select>
-              </mat-form-field>
-              
-              <mat-form-field subscriptSizing="dynamic" class="m-2" *ngIf="valorFiltro.slice(0, 4) == 'brin' || !valorFiltro">
-                <mat-label>Brinco</mat-label>
-                <input
-                type="number"
-                matInput
-                placeholder="Valor"
-                [(ngModel)]="valorPesquisa"
-                />
-              </mat-form-field>
-              
-              <mat-form-field subscriptSizing="dynamic" class="m-2" *ngIf="valorFiltro.slice(0, 4) == 'data'">
-                <mat-label>Data</mat-label>
-                <input matInput [matDatepicker]="picker" [(ngModel)]="valorPesquisa" />
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <div class="col-4">
-              <button
-                mat-fab
-                color="primary"
-                aria-label="Pesquisar"
-                (click)="filtrarListagem(valorFiltro)"
-              >
-                <mat-icon>search</mat-icon>
-              </button>
-              <button (click)="limparFiltro()" mat-mini-fab color="warn" aria-label="Limpar">
-                <mat-icon>clear</mat-icon>
-              </button>
-            </div>
-        </div>
+    <div class="d-flex align-items-center justify-content-center">
+      <mat-form-field subscriptSizing="dynamic" class="m-2">
+        <mat-label>Filtro</mat-label>
+        <mat-select matNativeControl required [(ngModel)]="valorFiltro">
+          <mat-option value="brinco">Brinco do Animal</mat-option>
+          <mat-option value="brincoPai">Brinco do pai</mat-option>
+          <mat-option value="brincoMae">Brinco da mãe</mat-option>
+          <mat-option value="dataNascimento">Data de nascimento</mat-option>
+          <mat-option value="sexo">Sexo</mat-option>
+        </mat-select>
+      </mat-form-field>
 
+      <mat-form-field
+        subscriptSizing="dynamic"
+        *ngIf="valorFiltro == 'sexo'"
+        class="m-2"
+      >
+        <mat-label>Sexo</mat-label>
+        <mat-select matNativeControl required [(ngModel)]="valorPesquisa">
+          <mat-option value="M">Masculino</mat-option>
+          <mat-option value="F">Feminino</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        subscriptSizing="dynamic"
+        class="m-2"
+        *ngIf="valorFiltro.slice(0, 4) == 'brin' || !valorFiltro"
+      >
+        <mat-label>Brinco</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Valor"
+          [(ngModel)]="valorPesquisa"
+        />
+      </mat-form-field>
+
+      <mat-form-field
+        subscriptSizing="dynamic"
+        class="m-2"
+        *ngIf="valorFiltro.slice(0, 4) == 'data'"
+      >
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="valorPesquisa" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="col-4">
+        <button
+          mat-fab
+          color="primary"
+          aria-label="Pesquisar"
+          (click)="filtrarListagem(valorFiltro)"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+        <button
+          (click)="limparFiltro()"
+          mat-mini-fab
+          color="warn"
+          aria-label="Limpar"
+        >
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
