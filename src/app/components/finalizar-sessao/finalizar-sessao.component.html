@@ -13,25 +13,6 @@
         <mat-step *ngFor="let atividade of atividades" [editable]="false" [label]="atividade.descricao">
             <p>Selecione todos os suinos que participaram da sessão:</p>
 
-            <form [formGroup]="formSuinos">
-                <div class="col-6 suinos">
-                    <div>
-                        <mat-checkbox checked="true" (change)="checkAtividade($event.checked)">
-                            Selecionar Todos
-                        </mat-checkbox>
-                    </div>
-                    <div class="suinos-container">
-                        <section class="row">
-                            <mat-checkbox class="col-4" *ngFor="let suino of suinosFiltrados"
-                                formControlName="{{suino.id}}">{{
-                                suino.brincoAnimal }}</mat-checkbox>
-                        </section>
-                    </div>
-                </div>
-            </form>
-
-            <br>
-
             <div class="filter-container">
                 <mat-form-field>
                     <mat-label>Filtro</mat-label>
@@ -73,6 +54,28 @@
                     <mat-icon (click)="limparFiltro()">clear</mat-icon>
                 </button>
             </div>
+
+            <form [formGroup]="formSuinos">
+                <div class="col-6 suinos">
+                    <div class="row">
+                      <div class="col-6 text-right">
+                        <mat-checkbox (change)="checkAtividade($event.checked)">
+                          Selecionar Todos
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                    <div class="suinos-container container">
+                      <section class="row">
+                        <mat-checkbox
+                          class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                          *ngFor="let suino of suinosFiltrados"
+                          formControlName="{{ suino.id }}"
+                          >{{ suino.brincoAnimal }}</mat-checkbox
+                        >
+                      </section>
+                    </div>
+                  </div>
+            </form>
 
             <br>
 
