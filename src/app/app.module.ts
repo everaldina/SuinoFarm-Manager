@@ -4,12 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { DatePipe } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule} from '@angular/material/select';
@@ -24,62 +22,59 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { AuthGuard } from './auth/auth.guard';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthModule } from './modules/auth/auth.module';
 
-import { CadastroSuinoComponent } from './components/cadastro-suino/cadastro-suino.component';
-import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
-import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.component';
-import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
-import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.component';
+
+
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { AuthComponent } from './components/auth/auth.component';
-import { CadastroAtividadeComponent } from './components/cadastro-atividade/cadastro-atividade.component';
-import { CadastroSessaoComponent } from './components/cadastro-sessao/cadastro-sessao.component';
-import { ListaSessoesComponent } from './components/lista-sessoes/lista-sessoes.component';
 import { HomeComponent } from './components/home/home.component';
-import { FinalizarSessaoComponent } from './components/finalizar-sessao/finalizar-sessao.component';
+
+
+import { PesoModule } from './modules/peso/peso.module';
+import { SuinoModule } from './modules/suino/suino.module';
+import { SessaoModule } from './modules/sessao/sessao.module';
+import { SharedModule,  } from './modules/shared/shared.module';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 const routes: Routes = [
   { path: 'login', component: AuthComponent },
-  { path: 'cadastroSuino', component: CadastroSuinoComponent, canActivate: [AuthGuard] },
-  { path: 'listaSuinos', component: ListaSuinosComponent, canActivate: [AuthGuard] },
-  { path: 'cadastroPeso', component: CadastroPesoComponent, canActivate: [AuthGuard] },
-  { path: 'edicaoPeso', component: EdicaoPesoComponent, canActivate: [AuthGuard] },
-  { path: 'graficoPeso/:id', component: GraficoPesoComponent, canActivate: [AuthGuard] },
-  { path: 'cadastroAtividade', component: CadastroAtividadeComponent, canActivate: [AuthGuard] },
-  { path: 'cadastroSessao', component: CadastroSessaoComponent, canActivate: [AuthGuard] },
-  { path: 'listaSessoes', component: ListaSessoesComponent, canActivate: [AuthGuard] },
-  { path: 'finalizarSessao/:id', component: FinalizarSessaoComponent, canActivate: [AuthGuard] },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { 
+    path: 'suinos', 
+    loadChildren: () => import('./modules/suino/suino.module').then(m => m.SuinoModule), 
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'pesos', 
+    loadChildren: () => import('./modules/peso/peso.module').then(m => m.PesoModule),
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'sessoes', 
+    loadChildren: () => import('./modules/sessao/sessao.module').then(m => m.SessaoModule), 
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: '', 
+    component: HomeComponent, canActivate: [AuthGuard] 
+  }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    CadastroSuinoComponent,
-    ListaSuinosComponent,
-    GraficoPesoComponent,
-    CadastroPesoComponent,
-    EdicaoPesoComponent,
     AuthComponent,
     LoadingSpinnerComponent,
     DialogComponent,
-    CadastroAtividadeComponent,
-    CadastroSessaoComponent,
-    ListaSessoesComponent,
-    HomeComponent,
-    FinalizarSessaoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
@@ -91,12 +86,15 @@ const routes: Routes = [
     MatCheckboxModule,
     MatBadgeModule,
     MatStepperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    PesoModule,
+    SuinoModule,
+    SessaoModule,
+    SharedModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     provideAnimationsAsync(),
-    DatePipe
   ],
   bootstrap: [AppComponent]
 })

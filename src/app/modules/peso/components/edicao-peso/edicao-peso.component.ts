@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DatabaseService } from '../../services/database.service';
-import { Suino } from '../../models/suino';
-import { MedidaPeso } from '../../models/medida-peso';
+import { DatabaseService } from '../../../../services/database.service';
+import { Suino } from '../../../../models/suino';
+import { MedidaPeso } from '../../../../models/medida-peso';
 
 @Component({
   selector: 'app-edicao-peso',
