@@ -28,8 +28,7 @@ const routes: Routes = [
 @NgModule({
     declarations: [],
     imports: [
-        RouterModule.forChild(routes),
-        PesoModule
+        RouterModule.forChild(routes)
     ],
     exports: [RouterModule]
 })

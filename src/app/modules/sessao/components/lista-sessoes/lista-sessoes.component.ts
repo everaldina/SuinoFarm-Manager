@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { Sessao } from '../../models/sessao';
-import { DatabaseService } from '../../services/database.service';
+import { Sessao } from '../../../../models/sessao';
+import { DatabaseService } from '../../../../services/database.service';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-lista-sessoes',

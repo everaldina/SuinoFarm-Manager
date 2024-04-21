@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CadastroSuinoComponent } from './components/cadastro-suino/cadastro-suino.component';
 import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
 
+import { PesoModule } from '../peso/peso.module';
 
 @NgModule({
   declarations: [
@@ -11,11 +12,12 @@ import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.com
     ListaSuinosComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    PesoModule
   ],
   exports: [
     CadastroSuinoComponent,
-    ListaSuinosComponent
+    ListaSuinosComponent,
   ]
 })
 export class SuinoModule { }

@@ -4,33 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Routes } from '@angular/router';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule} from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-import { AuthModule } from './modules/auth/auth.module';
-
-
-
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthComponent } from './modules/auth/components/auth/auth.component';
 
+import { AuthInterceptor } from './modules/auth/auth.interceptor';
+import { AuthGuard } from './modules/auth/auth.guard';
 
 import { PesoModule } from './modules/peso/peso.module';
 import { SuinoModule } from './modules/suino/suino.module';
@@ -38,7 +22,6 @@ import { SessaoModule } from './modules/sessao/sessao.module';
 import { SharedModule,  } from './modules/shared/shared.module';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
 
 const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -66,31 +49,23 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
     LoadingSpinnerComponent,
     DialogComponent,
-    HomeComponent
+    HomeComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatBadgeModule,
-    MatStepperModule,
-    MatProgressSpinnerModule,
     PesoModule,
     SuinoModule,
     SessaoModule,
-    SharedModule
+    SharedModule,
+    PesoModule,
+    SuinoModule,
+    SessaoModule,
+    SharedModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

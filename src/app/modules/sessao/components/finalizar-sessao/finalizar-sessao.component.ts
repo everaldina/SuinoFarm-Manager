@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { Sessao } from '../../models/sessao';
-import { DatabaseService } from '../../services/database.service';
+import { Sessao } from '../../../../models/sessao';
+import { DatabaseService } from '../../../../services/database.service';
 import { ActivatedRoute } from '@angular/router';
-import { Atividade } from '../../models/atividade';
-import { Suino } from '../../models/suino';
+import { Atividade } from '../../../../models/atividade';
+import { Suino } from '../../../../models/suino';
 import {
   FormGroup,
   FormBuilder,

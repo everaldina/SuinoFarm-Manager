@@ -11,11 +11,11 @@ import { PesoRoutingModule } from './peso-rounting.module';
   declarations: [
     GraficoPesoComponent,
     CadastroPesoComponent,
-    EdicaoPesoComponent,
-    PesoRoutingModule
+    EdicaoPesoComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    PesoRoutingModule
   ],
   exports: [
     GraficoPesoComponent,

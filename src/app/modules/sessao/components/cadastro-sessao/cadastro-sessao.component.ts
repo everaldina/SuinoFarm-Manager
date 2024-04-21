@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Atividade } from '../../models/atividade';
-import { DatabaseService } from '../../services/database.service';
+import { Atividade } from '../../../../models/atividade';
+import { DatabaseService } from '../../../../services/database.service';
 import {
   FormGroup,
   FormBuilder,
@@ -10,9 +10,9 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms';
-import { Suino } from '../../models/suino';
+import { Suino } from '../../../../models/suino';
 import { DatePipe } from '@angular/common';
-import { Sessao } from '../../models/sessao';
+import { Sessao } from '../../../../models/sessao';
 
 @Component({
   selector: 'app-cadastro-sessao',

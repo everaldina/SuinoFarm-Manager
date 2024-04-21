@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Suino } from '../../models/suino';
-import { DatabaseService } from '../../services/database.service';
+import { Suino } from '../../../../models/suino';
+import { DatabaseService } from '../../../../services/database.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../../../../components/dialog/dialog.component';
 
 @Component({
   selector: 'app-lista-suinos',

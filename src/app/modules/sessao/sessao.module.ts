@@ -6,7 +6,6 @@ import { CadastroSessaoComponent } from './components/cadastro-sessao/cadastro-s
 import { ListaSessoesComponent } from './components/lista-sessoes/lista-sessoes.component';
 import { FinalizarSessaoComponent } from './components/finalizar-sessao/finalizar-sessao.component';
 
-
 @NgModule({
   declarations: [
     CadastroAtividadeComponent,
