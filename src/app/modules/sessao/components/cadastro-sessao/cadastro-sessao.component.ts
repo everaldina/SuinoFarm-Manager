@@ -8,7 +8,6 @@ import {
   FormArray,
   ValidatorFn,
   AbstractControl,
-  FormControl,
 } from '@angular/forms';
 import { Suino } from '../../../../models/suino';
 import { DatePipe } from '@angular/common';

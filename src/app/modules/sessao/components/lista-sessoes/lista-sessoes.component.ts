@@ -16,7 +16,7 @@ export class ListaSessoesComponent {
   valorFiltro: string = '';
   valorPesquisa: any = '';
 
-  constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router, private dialog: MatDialog) {
+  constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router) {
     this.dataBase.getSessoes().subscribe((response) => {
       for (const key in response) {
         if (response.hasOwnProperty(key) && typeof response[key] === 'object') {

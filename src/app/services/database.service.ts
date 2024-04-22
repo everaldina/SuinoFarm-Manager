@@ -6,7 +6,6 @@ import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
-  HttpParams,
 } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError, map } from 'rxjs/operators';

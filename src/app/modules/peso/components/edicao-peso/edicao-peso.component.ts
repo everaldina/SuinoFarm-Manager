@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from '../../../../services/database.service';
 import { Suino } from '../../../../models/suino';
 import { MedidaPeso } from '../../../../models/medida-peso';
