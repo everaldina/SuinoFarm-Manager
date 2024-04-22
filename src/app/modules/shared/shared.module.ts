@@ -42,5 +42,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatStepperModule,
     MatProgressSpinnerModule
   ],
+  providers: [DatePipe],
 })
 export class SharedModule { }

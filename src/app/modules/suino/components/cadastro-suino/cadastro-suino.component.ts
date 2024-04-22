@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { DatabaseService } from '../../../../services/database.service';
 import { Suino } from '../../../../models/suino';
 import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-cadastro-suino',
   templateUrl: './cadastro-suino.component.html',

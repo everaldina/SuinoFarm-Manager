@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Sessao } from '../../../../models/sessao';
 import { DatabaseService } from '../../../../services/database.service';
 import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-lista-sessoes',
   templateUrl: './lista-sessoes.component.html',
@@ -63,6 +64,6 @@ export class ListaSessoesComponent {
   }
 
   finalizarSessao(id: string){
-    this.router.navigate(['/finalizarSessao', id]);
+    this.router.navigate(['sessoes/finalizar-sessao', id]);
   }
 }

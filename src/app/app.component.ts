@@ -22,12 +22,12 @@ export class AppComponent {
     this.rotas.navigate(['/pesos/editar']);
   }
 
-  paraFormCadastro() {
-    this.rotas.navigate(['cadastroSuino']);
+  paraCadastroSuino() {
+    this.rotas.navigate(['/suinos/cadastro']);
   }
 
   paraListaSuinos() {
-    this.rotas.navigate(['listaSuinos']);
+    this.rotas.navigate(['suinos/listar']);
   }
 
   paraLogin() {
@@ -39,15 +39,15 @@ export class AppComponent {
   }
 
   paraCadastroAtividade() {
-    this.rotas.navigate(['cadastroAtividade']);
+    this.rotas.navigate(['sessoes/cadastro-atividade']);
   }
 
   paraCadastroSessao() {
-    this.rotas.navigate(['cadastroSessao']);
+    this.rotas.navigate(['sessoes/cadastro-sessao']);
   }
 
   paraListaSessoes() {
-    this.rotas.navigate(['listaSessoes']);
+    this.rotas.navigate(['sessoes/listar-sessoes']);
   }
 
   isLoggedIn(): boolean {

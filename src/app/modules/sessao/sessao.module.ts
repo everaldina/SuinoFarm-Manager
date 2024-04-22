@@ -6,6 +6,8 @@ import { CadastroSessaoComponent } from './components/cadastro-sessao/cadastro-s
 import { ListaSessoesComponent } from './components/lista-sessoes/lista-sessoes.component';
 import { FinalizarSessaoComponent } from './components/finalizar-sessao/finalizar-sessao.component';
 
+import { SessaoRoutingModule } from './sessao-routing.module';
+
 @NgModule({
   declarations: [
     CadastroAtividadeComponent,
@@ -14,7 +16,8 @@ import { FinalizarSessaoComponent } from './components/finalizar-sessao/finaliza
     FinalizarSessaoComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    SessaoRoutingModule
   ],
   exports: [
     CadastroAtividadeComponent,

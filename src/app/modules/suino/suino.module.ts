@@ -5,6 +5,7 @@ import { CadastroSuinoComponent } from './components/cadastro-suino/cadastro-sui
 import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
 
 import { PesoModule } from '../peso/peso.module';
+import { SuinoRoutingModule } from './suino-routing.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { PesoModule } from '../peso/peso.module';
   ],
   imports: [
     SharedModule,
-    PesoModule
+    PesoModule,
+    SuinoRoutingModule
   ],
   exports: [
     CadastroSuinoComponent,
