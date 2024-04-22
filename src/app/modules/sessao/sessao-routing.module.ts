@@ -10,7 +10,7 @@ import { FinalizarSessaoComponent } from './components/finalizar-sessao/finaliza
 const routes: Routes = [
     {
         path: 'sessoes',
-        redirectTo: 'listar-sessoes',
+        redirectTo: 'sessoes/listar-sessoes',
         pathMatch: 'full'
     },
     {

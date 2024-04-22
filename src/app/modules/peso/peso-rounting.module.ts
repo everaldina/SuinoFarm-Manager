@@ -8,7 +8,7 @@ import { EdicaoPesoComponent } from './components/edicao-peso/edicao-peso.compon
 const routes: Routes = [
     {
         path: 'pesos',
-        redirectTo: 'cadastro',
+        redirectTo: 'pesos/cadastro',
         pathMatch: 'full'
     },
     {
