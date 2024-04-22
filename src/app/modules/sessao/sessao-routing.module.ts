@@ -9,7 +9,7 @@ import { FinalizarSessaoComponent } from './components/finalizar-sessao/finaliza
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'sessoes',
         redirectTo: 'listar-sessoes',
         pathMatch: 'full'
     },

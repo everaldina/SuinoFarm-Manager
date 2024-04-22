@@ -7,7 +7,7 @@ import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.com
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'suinos',
     redirectTo: 'cadastro',
     pathMatch: 'full'
   },
