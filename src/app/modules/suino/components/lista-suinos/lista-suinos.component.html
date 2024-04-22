@@ -4,6 +4,8 @@
   <mat-form-field>
     <mat-label>Filtro</mat-label>
     <mat-select matNativeControl required [(ngModel)]="valorFiltro">
+      <mat-option value="all">Sem Filtro</mat-option>
+      <mat-option value="brincoAnimal">Brinco do animal</mat-option>
       <mat-option value="brincoPai">Brinco do pai</mat-option>
       <mat-option value="brincoMae">Brinco da mãe</mat-option>
       <mat-option value="dataNascimento">Data de nascimento</mat-option>
@@ -11,6 +13,11 @@
       <mat-option value="sexo">Sexo</mat-option>
       <mat-option value="status">Status</mat-option>
     </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="valorFiltro == 'all' || !valorFiltro ">
+    <mat-label>Valor</mat-label>
+    <input disabled type="text" matInput placeholder="Valor" [(ngModel)]="valorPesquisa">
   </mat-form-field>
 
   <mat-form-field *ngIf="valorFiltro == 'sexo'">
@@ -30,7 +37,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'brin' || !valorFiltro" >
+  <mat-form-field *ngIf="valorFiltro.slice(0,4) == 'brin'" >
     <mat-label>Brinco</mat-label>
     <input type="number" matInput placeholder="Valor" [(ngModel)]="valorPesquisa">
   </mat-form-field>
