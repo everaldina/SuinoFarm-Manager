@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CadastroSuinoComponent } from './components/cadastro-suino/cadastro-suino.component';
 import { ListaSuinosComponent } from './components/lista-suinos/lista-suinos.component';
-import { HistoricoComponent } from './components/historico/historico.component';
+import { HistoricoComponent } from '../../components/historico/historico.component';
 
 
 const routes: Routes = [

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { SharedModule } from '../../../shared/shared.module';
-import { PesoModule } from '../../../peso/peso.module';
+import { SharedModule } from '../../modules/shared/shared.module';
+import { PesoModule } from '../../modules/peso/peso.module';
 
-import { Suino } from '../../../../models/suino';
-import { DatabaseService } from '../../../../services/database.service';
+import { Suino } from '../../models/suino';
+import { DatabaseService } from '../../services/database.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
