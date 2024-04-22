@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PesoModule } from './peso.module';
 
 import { CadastroPesoComponent } from './components/cadastro-peso/cadastro-peso.component';
 import { GraficoPesoComponent } from './components/grafico-peso/grafico-peso.component';
@@ -10,13 +9,14 @@ const routes: Routes = [
     {
         path: '',
         redirectTo: 'cadastro',
+        pathMatch: 'full'
     },
     {
         path: 'cadastro',
         component: CadastroPesoComponent
     },
     {
-        path: 'edicao',
+        path: 'editar',
         component: EdicaoPesoComponent
     },
     {

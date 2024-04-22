@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DialogComponent } from './components/dialog/dialog.component';
@@ -19,7 +19,7 @@ import { AuthGuard } from './modules/auth/auth.guard';
 import { PesoModule } from './modules/peso/peso.module';
 import { SuinoModule } from './modules/suino/suino.module';
 import { SessaoModule } from './modules/sessao/sessao.module';
-import { SharedModule,  } from './modules/shared/shared.module';
+import { SharedModule  } from './modules/shared/shared.module';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -66,6 +66,7 @@ const routes: Routes = [
     SuinoModule,
     SessaoModule,
     SharedModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

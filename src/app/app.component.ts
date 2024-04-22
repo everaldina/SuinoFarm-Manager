@@ -15,11 +15,11 @@ export class AppComponent {
   }
 
   paraCadastroPeso() {
-    this.rotas.navigate(['cadastroPeso']);
+    this.rotas.navigate(['/pesos/cadastro']);
   }
 
   paraEdicaoPeso() {
-    this.rotas.navigate(['edicaoPeso']);
+    this.rotas.navigate(['/pesos/editar']);
   }
 
   paraFormCadastro() {
