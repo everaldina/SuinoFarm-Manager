@@ -72,12 +72,12 @@
 
         <br>
 
-        <button (click)="expandirAnimal(i)">
+        <button mat-raised-button color="primary" (click)="expandirAnimal(i)">
             {{ animalExpandidoIndex === i ? 'Recolher Detalhes' : 'Expandir Detalhes' }}
         </button>
 
-        <button (click)="exibirGrafico(suino)" [ngStyle]="{'background-color': 'green'}">
-          {{ suinoParaGrafico && suinoParaGrafico.id === suino.id ? 'Esconder Gráfico' : 'Exibir Gráfico' }}
+        <button mat-raised-button color="primary" (click)="irParaHistorico(suino.id)" [ngStyle]="{'background-color': 'green'}">
+            Histórico
         </button>
         
         <div class="btnGroup">
@@ -91,10 +91,6 @@
             <mat-icon>delete_forever</mat-icon>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="suinoParaGrafico && suinoParaGrafico.id === suino.id" id="grafico">
-        <app-grafico-peso [selectedSuino]="suino"></app-grafico-peso>
       </div>
     </section>
 </div>

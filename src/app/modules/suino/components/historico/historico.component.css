@@ -1,0 +1,14 @@
+.grafico {
+    margin-left: 10rem;
+    width: 700px;
+    border: #8d8d8d solid 1px;
+    background-color: white;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}

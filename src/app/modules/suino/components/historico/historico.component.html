@@ -1,0 +1,21 @@
+
+<table class="table">
+    
+</table>
+
+<button mat-raised-button color="primary" (click)="exibirGraficoPeso()" >
+    {{ mostarGraficoPeso ? 'Esconder Historico de Peso' : 'Exibir Historico de Peso' }}
+</button>
+
+<button mat-raised-button color="primary" (click)="exibirGraficoAtividade()" >
+    {{ mostarGraficoAtividade ? 'Esconder Historico de Atividade' : 'Exibir Historico de Atividade' }}
+</button>
+
+
+<div *ngIf="mostarGraficoPeso" class="grafico">
+    <app-grafico-peso [selectedSuino]="suino"></app-grafico-peso>
+</div>
+
+<div *ngIf="mostarGraficoAtividade" class="grafico">
+    <!-- <app-grafico-atividade [selectedSuino]="suino"></app-grafico-atividade> -->
+</div>

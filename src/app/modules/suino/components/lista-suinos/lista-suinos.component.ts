@@ -18,7 +18,6 @@ export class ListaSuinosComponent {
   animalExpandidoIndex: number | null | undefined;
   valorFiltro: string = '';
   valorPesquisa: any = '';
-  suinoParaGrafico: Suino = {} as Suino;
 
   constructor(private dataBase: DatabaseService, private dataPipe: DatePipe, private router: Router, private dialog: MatDialog) {
     this.dataBase.getSuinos().subscribe((response) => {
@@ -111,11 +110,8 @@ export class ListaSuinosComponent {
     this.valorPesquisa = '';
   }
 
-  exibirGrafico(suino: Suino) {
-    if (suino.id == this.suinoParaGrafico.id)
-      this.suinoParaGrafico = {} as Suino;
-    else
-      this.suinoParaGrafico = suino;
+  irParaHistorico(id: string) {
+    this.router.navigate(['/suinos/historico', id]);
   }
 
   abreDialogoDelete(id: string): void {

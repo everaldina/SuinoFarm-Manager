@@ -27,8 +27,8 @@ h1 {
 }
 
 .appointment-list section button {
-    background-color: #007bff;
-    color: #fff;
+    /* background-color: #007bff;
+    color: #fff; */
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
