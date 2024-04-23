@@ -438,7 +438,7 @@ export class DatabaseService {
             historico.push({
               data: new Date(response[key].data_medida),
               descricao: 'Pesagem',
-              detalhes: `${response[key].peso} kg`,
+              detalhes: `${response[key].peso} kg`
             });
           }
         }
@@ -455,11 +455,11 @@ export class DatabaseService {
             let sessao = JSON.parse(JSON.stringify(response[key]));
             for (const keyAtividade in sessao['atividades']) {
               let atividade = sessao['atividades'][keyAtividade];
-              if (atividade.hasOwnProperty(id) && atividade[id]) {
+              if (atividade.hasOwnProperty(id) && atividade[id]) {  
                 historico.push({
                   data: new Date(sessao.data),
                   descricao: atividade.id,
-                  detalhes: atividade[id] ? 'Realizada' : 'Não realizada',
+                  detalhes: atividade[id] ? 'Realizada' : 'Não realizada'
                 });
               }
             }

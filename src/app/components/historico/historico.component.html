@@ -1,21 +1,39 @@
 
-<table class="table">
-    
-</table>
-
-<button mat-raised-button color="primary" (click)="exibirGraficoPeso()" >
-    {{ mostarGraficoPeso ? 'Esconder Historico de Peso' : 'Exibir Historico de Peso' }}
-</button>
-
-<button mat-raised-button color="primary" (click)="exibirGraficoAtividade()" >
-    {{ mostarGraficoAtividade ? 'Esconder Historico de Atividade' : 'Exibir Historico de Atividade' }}
-</button>
-
-
-<div *ngIf="mostarGraficoPeso" class="grafico">
-    <app-grafico-peso [selectedSuino]="suino"></app-grafico-peso>
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Atividade</th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let atividade of historico">
+                <td>{{ atividade.data }}</td>
+                <td>{{ atividade.descricao }}</td>
+                <td>
+                    {{ atividade.detalhes }}
+                </td>
+            </tr>
+        </thead>
+    </table>
 </div>
 
-<div *ngIf="mostarGraficoAtividade" class="grafico">
-    <!-- <app-grafico-atividade [selectedSuino]="suino"></app-grafico-atividade> -->
+<div class="btngroup">
+    <button mat-raised-button color="primary" (click)="exibirGraficoPeso()" >
+        {{ mostarGraficoPeso ? 'Esconder Historico de Peso' : 'Exibir Historico de Peso' }}
+    </button>
+    
+    <button mat-raised-button color="primary" (click)="exibirGraficoAtividade()" >
+        {{ mostarGraficoAtividade ? 'Esconder Historico de Atividade' : 'Exibir Historico de Atividade' }}
+    </button>
+</div>
+
+<div class="graficos">
+    <div class="grafico" *ngIf="mostarGraficoPeso">
+        <app-grafico-peso [selectedSuino]="suino"></app-grafico-peso>
+    </div>
+    
+    <div class="grafico" *ngIf="mostarGraficoAtividade">
+        <app-grafico-atividade [selectedSuino]="suino"></app-grafico-atividade>
+    </div>
 </div>

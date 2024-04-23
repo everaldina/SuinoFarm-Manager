@@ -120,6 +120,5 @@ export class GraficoPesoComponent implements OnInit{
     }
     return 0;
   };
-
 }
 
