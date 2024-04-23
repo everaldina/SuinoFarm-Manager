@@ -10,7 +10,7 @@ import { AutenticacaoService } from './modules/auth/autenticacao.service';
 export class AppComponent {
   title = 'SuinoFarm-Manager';
 
-  constructor(private rotas: Router, private rotaAtiva: ActivatedRoute, private autenticacao: AutenticacaoService) {
+  constructor(private rotas: Router, private autenticacao: AutenticacaoService) {
 
   }
 

@@ -1,10 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from '../../../../services/database.service';
 import { Suino } from '../../../../models/suino';
 import { MedidaPeso } from '../../../../models/medida-peso';
 import { Chart, registerables } from 'chart.js';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-grafico-peso',
@@ -21,7 +19,7 @@ export class GraficoPesoComponent implements OnInit{
   @Input() selectedSuino: Suino | undefined;
   pesagens: MedidaPeso[] = [];
 
-  constructor(private databaseService: DatabaseService, private route: ActivatedRoute) {
+  constructor(private databaseService: DatabaseService) {
     
   }
 

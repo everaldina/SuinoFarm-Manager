@@ -43,6 +43,10 @@ export class ListaSuinosComponent {
     return this.listaSuinos.filter(suino => suino.dataSaida === data_pesquisa);
   }
 
+  filtarBrinco(brinco: string){
+    return this.listaSuinos.filter(suino => suino.brincoAnimal === brinco);
+  }
+
   filtrarPai(brinco_pai: string){
     return this.listaSuinos.filter(suino => suino.brincoPai === brinco_pai);
   }
@@ -79,6 +83,14 @@ export class ListaSuinosComponent {
 
   filtrarListagem(filtro: string){
     switch (filtro){
+      case 'all':
+        this.listaFiltrada = this.listaSuinos;
+        break;
+
+      case 'brincoAnimal':
+        this.listaFiltrada = this.filtarBrinco(this.valorPesquisa.toString());
+        break;
+
       case 'brincoPai':
         this.listaFiltrada = this.filtrarPai(this.valorPesquisa.toString());
         break;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from '../../../../services/database.service';
 import { Suino } from '../../../../models/suino';
 import { DatePipe } from '@angular/common';
