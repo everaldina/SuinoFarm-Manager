@@ -19,7 +19,7 @@ import { Sessao } from '../../../../models/sessao';
   templateUrl: './cadastro-sessao.component.html',
   styleUrl: './cadastro-sessao.component.css',
 })
-export class CadastroSessaoComponent implements OnInit{
+export class CadastroSessaoComponent implements OnInit {
   listaAtividades: Atividade[] = [];
   atividadesSelecionadas: string[] = [];
   listaSuinos: Suino[] = [];
@@ -32,14 +32,14 @@ export class CadastroSessaoComponent implements OnInit{
   constructor(
     private database: DatabaseService,
     private formBuilder: FormBuilder,
-    private dataPipe: DatePipe,
+    private dataPipe: DatePipe
   ) {
     this.formCadastro = this.formBuilder.group({
       descricao: ['', Validators.required],
       data: ['', Validators.required],
       atividades: this.formBuilder.array([], {
         validators: this.minimoSelecionado(),
-      })
+      }),
     });
   }
 
@@ -54,23 +54,22 @@ export class CadastroSessaoComponent implements OnInit{
 
     this.database.getSuinos().subscribe((suinos) => {
       this.listaSuinos = [];
-      
+
       for (const key in suinos) {
         if (suinos.hasOwnProperty(key)) {
           if ('status' in suinos[key] && suinos[key].status === 'Ativo')
             this.listaSuinos.push({ ...suinos[key], id: key });
         }
       }
-      
+
       this.suinosFiltrados = this.listaSuinos;
 
       this.listaSuinos.forEach((suino) => {
         this.formCadastro.addControl(suino.id, this.formBuilder.control(false));
       });
     });
-
   }
-  
+
   checkAtividade(marcado: boolean) {
     this.suinosFiltrados.forEach((suino) => {
       let id = suino.id;
@@ -88,8 +87,8 @@ export class CadastroSessaoComponent implements OnInit{
   }
 
   cadastrarSessao(): void {
-    if (this.formCadastro.invalid){
-      if (this.formCadastro.get('atividades')?.hasError('selecaoInvalida')){
+    if (this.formCadastro.invalid) {
+      if (this.formCadastro.get('atividades')?.hasError('selecaoInvalida')) {
         alert('Selecione ao menos uma atividade');
       }
     } else {
@@ -101,14 +100,13 @@ export class CadastroSessaoComponent implements OnInit{
           if (this.formCadastro.value[key]) {
             idSuinos.push(key);
           }
-          
         }
       }
-      if (!suinoSelecionado){
+      if (!suinoSelecionado) {
         alert('Selecione ao menos um suíno');
         return;
       }
-      
+
       let data = this.formCadastro.value.data;
       data = this.dataPipe.transform(data, 'yyyy-MM-dd') ?? '';
 
@@ -116,11 +114,14 @@ export class CadastroSessaoComponent implements OnInit{
         id: '',
         descricao: this.formCadastro.value.descricao,
         data: data,
-        status: false
-      }
+        status: false,
+      };
 
-
-      this.database.addSessao(sessao, this.formCadastro.value.atividades, idSuinos);
+      this.database.addSessao(
+        sessao,
+        this.formCadastro.value.atividades,
+        idSuinos
+      );
     }
   }
 
@@ -138,31 +139,35 @@ export class CadastroSessaoComponent implements OnInit{
     }
   }
 
-  filtrarDataNascimento(data: Date){
+  filtrarDataNascimento(data: Date) {
     let data_pesquisa = this.dataPipe.transform(data, 'yyyy-MM-dd');
-    return this.listaSuinos.filter(suino => suino.dataNascimento === data_pesquisa);
+    return this.listaSuinos.filter(
+      (suino) => suino.dataNascimento === data_pesquisa
+    );
   }
 
-  filtrarBrinco(brinco: string){
-    return this.listaSuinos.filter(suino => suino.brincoAnimal === brinco);
+  filtrarBrinco(brinco: string) {
+    return this.listaSuinos.filter((suino) => suino.brincoAnimal === brinco);
   }
 
-  filtrarPai(brinco_pai: string){
-    return this.listaSuinos.filter(suino => suino.brincoPai === brinco_pai);
+  filtrarPai(brinco_pai: string) {
+    return this.listaSuinos.filter((suino) => suino.brincoPai === brinco_pai);
   }
 
-  filtrarMae(brinco_mae: string){
-    return this.listaSuinos.filter(suino => suino.brincoMae === brinco_mae);
+  filtrarMae(brinco_mae: string) {
+    return this.listaSuinos.filter((suino) => suino.brincoMae === brinco_mae);
   }
 
-  filtrarSexo(sexo: string){
-    return this.listaSuinos.filter(suino => suino.sexo === sexo);
+  filtrarSexo(sexo: string) {
+    return this.listaSuinos.filter((suino) => suino.sexo === sexo);
   }
 
-  filtrarListagem(filtro: string){
-    switch (filtro){
+  filtrarListagem(filtro: string) {
+    switch (filtro) {
       case 'brinco':
-        this.suinosFiltrados = this.filtrarBrinco(this.valorPesquisa.toString());
+        this.suinosFiltrados = this.filtrarBrinco(
+          this.valorPesquisa.toString()
+        );
         break;
       case 'brincoPai':
         this.suinosFiltrados = this.filtrarPai(this.valorPesquisa.toString());
@@ -176,17 +181,14 @@ export class CadastroSessaoComponent implements OnInit{
         this.suinosFiltrados = this.filtrarDataNascimento(this.valorPesquisa);
         break;
 
-
       case 'sexo':
         this.suinosFiltrados = this.filtrarSexo(this.valorPesquisa);
         break;
-
     }
   }
 
-  limparFiltro(){
+  limparFiltro() {
     this.suinosFiltrados = this.listaSuinos;
     this.valorPesquisa = '';
   }
-
 }

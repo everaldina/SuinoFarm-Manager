@@ -8,8 +8,8 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
-import { retry, catchError, map } from 'rxjs/operators';
+import { Observable, throwError, of, concat, forkJoin, finalize } from 'rxjs';
+import { retry, catchError, map, concatMap, toArray } from 'rxjs/operators';
 import { Atividade } from '../models/atividade';
 
 @Injectable({
@@ -255,11 +255,13 @@ export class DatabaseService {
               suinos[id] = status;
             });
             for (let i = 0; i < listaAtividadesId.length; i++) {
-              let data = { ...suinos, id: listaAtividadesId[i]};
+              let data = {
+                ...suinos,
+                id: listaAtividadesId[i],
+              };
               this.http
                 .post(
-                  this.endpoint +
-                    `/sessoes/${sessaoId}/atividades/.json`,
+                  this.endpoint + `/sessoes/${sessaoId}/atividades/.json`,
                   data
                 )
                 .subscribe((response) => {
@@ -302,7 +304,10 @@ export class DatabaseService {
           const atividades: Atividade[] = [];
           for (const key in response) {
             if (response.hasOwnProperty(key)) {
-              atividades.push({ descricao: '', id: response[key].id });
+              atividades.push({
+                descricao: response[key].descricao,
+                id: response[key].id,
+              });
             }
           }
           return atividades;
@@ -349,9 +354,7 @@ export class DatabaseService {
     idSuino: string
   ): Observable<boolean> {
     return this.http
-      .get(
-        this.endpoint + `/sessoes/${idSessao}/atividades/.json`
-      )
+      .get(this.endpoint + `/sessoes/${idSessao}/atividades/.json`)
       .pipe(
         retry(2),
         catchError(this.handleError),
@@ -359,7 +362,10 @@ export class DatabaseService {
           const keys = Object.keys(response);
           for (const key of keys) {
             const atividade = response[key];
-            if (atividade.hasOwnProperty("id") && atividade["id"] === idAtividade) {
+            if (
+              atividade.hasOwnProperty('id') &&
+              atividade['id'] === idAtividade
+            ) {
               return atividade[idSuino] as boolean;
             }
           }
@@ -374,33 +380,99 @@ export class DatabaseService {
     idSuino: string,
     status: boolean
   ) {
-    this.http.get(this.endpoint + `/sessoes/${idSessao}/atividades/.json`).pipe(
-      retry(2),
-      catchError(this.handleError),
-      map((response: any) => {
-        console.log(response);
-        const keys = Object.keys(response);
-        for (const key of keys) {
-          const atividade = response[key];
-          if (atividade.hasOwnProperty("id") && atividade["id"] === idAtividade) {
-            atividade[idSuino] = status;
-            console.log(atividade);
-            this.http.put(this.endpoint + `/sessoes/${idSessao}/atividades/${key}.json`, atividade).subscribe();
+    this.http
+      .get(this.endpoint + `/sessoes/${idSessao}/atividades/.json`)
+      .pipe(
+        retry(2),
+        catchError(this.handleError),
+        map((response: any) => {
+          console.log(response);
+          const keys = Object.keys(response);
+          for (const key of keys) {
+            const atividade = response[key];
+            if (
+              atividade.hasOwnProperty('id') &&
+              atividade['id'] === idAtividade
+            ) {
+              atividade[idSuino] = status;
+              console.log(atividade);
+              this.http
+                .put(
+                  this.endpoint + `/sessoes/${idSessao}/atividades/${key}.json`,
+                  atividade
+                )
+                .subscribe();
+            }
           }
-        }
-      })
-    ).subscribe();
+        })
+      )
+      .subscribe();
   }
 
   mudarStatusSessao(idSessao: string, status: boolean) {
-    this.http.get(this.endpoint + `/sessoes/${idSessao}.json`).pipe(
-      retry(2),
-      catchError(this.handleError),
-      map((response: any) => {
-        response.status = status;
-        this.http.put(this.endpoint + `/sessoes/${idSessao}.json`, response).subscribe();
+    this.http
+      .get(this.endpoint + `/sessoes/${idSessao}.json`)
+      .pipe(
+        retry(2),
+        catchError(this.handleError),
+        map((response: any) => {
+          response.status = status;
+          this.http
+            .put(this.endpoint + `/sessoes/${idSessao}.json`, response)
+            .subscribe();
+        })
+      )
+      .subscribe();
+  }
+
+  getHistoricoSuino(id: string): Observable<any[]> {
+    let historico: {
+      data: Date;
+      descricao: string;
+      detalhes: string;
+    }[] = [];
+
+    const pesos$ = this.getPesos(id).pipe(
+      map((response) => {
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            historico.push({
+              data: new Date(response[key].data_medida),
+              descricao: 'Pesagem',
+              detalhes: `${response[key].peso} kg`,
+            });
+          }
+        }
+      }),
+      catchError((error) => {
+        return of([]);
       })
-    ).subscribe();
+    );
+
+    const sessoes$ = this.getSessoes().pipe(
+      map((response) => {
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            let sessao = JSON.parse(JSON.stringify(response[key]));
+            for (const keyAtividade in sessao['atividades']) {
+              let atividade = sessao['atividades'][keyAtividade];
+              if (atividade.hasOwnProperty(id) && atividade[id]) {
+                historico.push({
+                  data: new Date(sessao.data),
+                  descricao: atividade.id,
+                  detalhes: atividade[id] ? 'Realizada' : 'Não realizada',
+                });
+              }
+            }
+          }
+        }
+      }),
+      catchError((error) => {
+        return of([]);
+      })
+    );
+
+    return forkJoin([pesos$, sessoes$]).pipe(map(() => historico));
   }
 
   handleError(error: HttpErrorResponse) {
