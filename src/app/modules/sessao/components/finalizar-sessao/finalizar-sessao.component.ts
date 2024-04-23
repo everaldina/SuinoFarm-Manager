@@ -159,6 +159,6 @@ export class FinalizarSessaoComponent implements OnInit {
 
     alert('Sessão finalizada com sucesso!');
 
-    this.router.navigate(['/listaSessoes']);
+    this.router.navigate(['sessoes/listar-sessoes']);
   }
 }

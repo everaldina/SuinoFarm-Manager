@@ -8,7 +8,7 @@
                 <th></th>
             </tr>
             <tr *ngFor="let atividade of historico">
-                <td>{{ atividade.data }}</td>
+                <td>{{ formatarData(atividade.data) }}</td>
                 <td>{{ atividade.descricao }}</td>
                 <td>
                     {{ atividade.detalhes }}
@@ -34,6 +34,6 @@
     </div>
     
     <div class="grafico" *ngIf="mostarGraficoAtividade">
-        <app-grafico-atividade [selectedSuino]="suino"></app-grafico-atividade>
+        <app-grafico-atividade [selectedSuino]="suino" [historico]="historico"></app-grafico-atividade>
     </div>
 </div>

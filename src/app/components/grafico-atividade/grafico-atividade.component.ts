@@ -3,10 +3,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from '../../modules/shared/shared.module';
 import { SessaoModule } from '../../modules/sessao/sessao.module';
 
-import { DatabaseService } from '../../services/database.service';
 import { Suino } from '../../models/suino';
-import { Atividade } from '../../models/atividade';
-import { Sessao } from '../../models/sessao';
 import { Chart, registerables } from 'chart.js';
 
 @Component({
@@ -28,89 +25,76 @@ export class GraficoAtividadeComponent {
 
   id = '';
   @Input() selectedSuino: Suino | undefined;
+  @Input() historico: any[] = [];
 
   atividades: any[] = [];
   contagemAtividades: any = {};
 
-  constructor(private databaseService: DatabaseService) {
-    
-  }
+  constructor() { }
 
-  ngOnInit() {
-    if (this.selectedSuino) {
+  ngOnInit() {    
+    this.historico.forEach((atividade) => {
+      if (atividade.descricao !== 'Pesagem') {
+        this.atividades.push(atividade);
+      }
+    });
+
+    this.atividades.forEach(atividade => {
+      const id = atividade.id;
+      this.contagemAtividades[id] = this.contagemAtividades[id] ? this.contagemAtividades[id] + 1 : 1;
+    });
+    
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    
+    this.delay(1000).then(() => {
+      Chart.register(...registerables);
       
-      this.databaseService.getHistoricoSuino(this.selectedSuino.id).subscribe((response) => {
-        for (const key in response) {
-          if (response.hasOwnProperty(key)) {
-            if (response[key].descricao !== 'Pesagem') {
-              this.atividades.push({ ...response[key], id: key });
-              console.log(this.atividades);
+      // Remove duplicados
+      this.atividades = this.atividades.filter((item, index, self) =>
+        index === self.findIndex((t) => (
+          t.id === item.id
+        ))
+      );
+
+      // Ordena em ordem alfabética de descrição
+      this.atividades.sort((a, b) => a.descricao.localeCompare(b.descricao));
+
+      const labelsSuino = this.atividades.map(item => item.descricao);
+      const dataSuino = this.atividades.map(item => this.contagemAtividades[item.id]);
+
+      this.chart = new Chart(this.elemento.nativeElement, {
+        type: 'bar',
+        data: {
+          labels: labelsSuino,
+          datasets: [
+            {
+              label: "Qtde de Aplicações",
+              data: dataSuino
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 0.5
+              }
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Histórico de Atividades'
             }
           }
         }
-
-        this.atividades.forEach(atividade => {
-          const id = atividade.id;
-          this.contagemAtividades[id] = this.contagemAtividades[id] ? this.contagemAtividades[id] + 1 : 1;
-        });
       });
-      
-      if (this.chart) {
-        this.chart.destroy();
-      }
-      
-      this.delay(1000).then(() => {
-        Chart.register(...registerables);
-        
-        let atividadesOrdenadas = this.atividades;
-        atividadesOrdenadas.sort((a, b) => {
-          const dataA = new Date(a.data);
-          const dataB = new Date(b.data);
-          
-          if (dataA < dataB) {
-            return -1;
-          }
-          if (dataA > dataB) {
-            return 1;
-          }
-          return 0;
-        });
-        
-        const labelsSuino = atividadesOrdenadas.map(item => item.descricao);
-        const dataSuino = atividadesOrdenadas.map(item => this.contagemAtividades[item.id]);
-
-        this.chart = new Chart(this.elemento.nativeElement, {
-          type: 'bar',
-          data: {
-            labels: labelsSuino,
-            datasets: [
-              {
-                label: "Qtde de Aplicações",
-                data: dataSuino
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  stepSize: 0.5
-                }
-              }
-            },
-            plugins: {
-              title: {
-                display: true,
-                text: 'Histórico de Atividades'
-              }
-            }
-          }
-        });
-      });
-    }
+    });
   }
 
   delay(ms: number) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { SharedModule } from '../../modules/shared/shared.module';
 import { PesoModule } from '../../modules/peso/peso.module';
 
@@ -46,13 +46,12 @@ export class HistoricoComponent {
     });
 
     this.dataBase.getHistoricoSuino(this.id).subscribe((response) => {
-      this.historico = response;
-
-      this.historico.forEach((historico) => {
-        historico.data = this.datePipe.transform(historico.data, 'dd/MM/yyyy') ?? '';
-      });
-      
+      this.historico = response;      
     });
+  }
+
+  formatarData(data: string): string {
+    return this.datePipe.transform(data, 'dd/MM/yyyy') ?? '';
   }
 
   exibirGraficoPeso() {

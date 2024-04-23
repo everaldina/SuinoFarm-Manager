@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError, of, concat, forkJoin, finalize } from 'rxjs';
-import { retry, catchError, map, concatMap, toArray } from 'rxjs/operators';
+import { retry, catchError, map, concatMap, toArray, timeout } from 'rxjs/operators';
 import { Atividade } from '../models/atividade';
 
 @Injectable({
@@ -426,6 +426,7 @@ export class DatabaseService {
 
   getHistoricoSuino(id: string): Observable<any[]> {
     let historico: {
+      id?: string;
       data: Date;
       descricao: string;
       detalhes: string;
@@ -455,13 +456,25 @@ export class DatabaseService {
             let sessao = JSON.parse(JSON.stringify(response[key]));
             for (const keyAtividade in sessao['atividades']) {
               let atividade = sessao['atividades'][keyAtividade];
-              if (atividade.hasOwnProperty(id) && atividade[id]) {  
+
+              this.getAtividade(atividade.id).subscribe((response) => { 
+                atividade.descricao = response.descricao;
+                
                 historico.push({
+                  id: atividade.id,
                   data: new Date(sessao.data),
-                  descricao: atividade.id,
+                  descricao: atividade.descricao,
                   detalhes: atividade[id] ? 'Realizada' : 'Não realizada'
                 });
-              }
+              });
+              
+              // if (atividade.hasOwnProperty(id) && atividade[id]) {
+              //   historico.push({
+              //     data: new Date(sessao.data),
+              //     descricao: atividade.id,
+              //     detalhes: atividade[id] ? 'Realizada' : 'Não realizada'
+              //   });
+              // }
             }
           }
         }
